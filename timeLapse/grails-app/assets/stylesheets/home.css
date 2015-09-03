@@ -1,0 +1,11 @@
+body {
+	background: black;
+	color: white;
+}
+
+.btn-primary.active { 
+	background: yellow; 
+	color: black;
+}
+
+input, select, textarea { background: #3D3c3a; }
