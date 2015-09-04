@@ -28,7 +28,8 @@ function addLayersToTheMap() {
 					params: params,
 					ratio: 1,
 					url: "/timeLapse/home/wms"
-				})
+				}),
+				visible: false
 			});
 
 			x.mapLayer = image;
@@ -83,10 +84,25 @@ function setupTimeLapse() {
 		})
 	});
 
+	// setup interactions so rotation can be controlled independently
+	tlv.mapInteractions = {
+		altDragRotate: new ol.interaction.DragRotate({ condition: ol.events.condition.altKeyOnly }),
+		dragPan: new ol.interaction.DragPan({ condition: ol.events.condition.noModifierKeys }),
+		dragRotate: new ol.interaction.DragRotate({ condition: ol.events.condition.always })
+	};
+	tlv.map.addInteraction(tlv.mapInteractions.altDragRotate);
+	tlv.map.addInteraction(tlv.mapInteractions.dragPan);
+
 	addLayersToTheMap();
 
 	tlv.map.getView().fit(tlv.bbox, tlv.map.getSize());
 
+	// register map listeners
+	tlv.map.on("moveend", theMapHasMoved);
+
+	// cycle through the layers to begin their chip downloads
 	tlv.currentLayer = 0;
 	for (var i = 0; i < tlv.layers.length; i++) { changeFrame("fastForward"); }
 }
+
+function theMapHasMoved() { /* place holder to be overriden by other functions */ }
