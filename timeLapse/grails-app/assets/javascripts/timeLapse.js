@@ -47,6 +47,8 @@ function changeFrame(param) {
 	else if (typeof param === "number") { tlv.currentLayer = param; }
 
 	tlv.layers[tlv.currentLayer].mapLayer.setVisible(true);
+
+	tlv.map.renderSync();
 }
 
 function getNextFrameIndex() { return tlv.currentLayer >= tlv.layers.length - 1 ? 0 : tlv.currentLayer + 1; }
