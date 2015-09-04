@@ -1,17 +1,54 @@
-function crossHairToggleButtonClick(desiredStatus) {
+function alignLayers() {
+	offsetToggleButtonClick("OFF");	
+
+	var anchorCoordinate = tlv.layers[tlv.currentLayer].offsetLayer.getSource().getFeatures()[0].getGeometry().getCoordinates();
+	$.each(
+		tlv.layers,
+		function(i, x) {
+			// calculate the offset
+			var feature = x.offsetLayer.getSource().getFeatures()[0];
+			var coordinate = feature.getGeometry().getCoordinates();
+			var deltaX = coordinate[0] - anchorCoordinate[0];
+			var deltaY = coordinate[1] - anchorCoordinate[1];
+
+			// update layer params
+			var source = x.mapLayer.getSource();
+			var layerParams = source.getParams();
+			source.updateParams({
+				OFFSET_LAT: layerParams.OFFSET_LAT + deltaY,
+				OFFSET_LON: layerParams.OFFSET_LON + deltaX
+			});
+
+			// move the offset point
+			var point = new ol.geom.Point([coordinate[0] - deltaX, coordinate[1] - deltaY]);			
+			feature.setGeometry(point);
+
+			// refresh the layer
+			changeFrame("fastForward");
+		}
+	);
+}
+
+var changeFrameLayers = changeFrame;
+changeFrame = function(params) {
+	if ($("#layersOffsetButton").html() == "ON") {
+		tlv.layers[tlv.currentLayer].offsetLayer.setVisible(false); 
+		tlv.map.removeInteraction(tlv.layers[tlv.currentLayer].offsetLayerModifyInteraction);
+
+		changeFrameLayers(params);
+
+		tlv.layers[tlv.currentLayer].offsetLayer.setVisible(true); 
+		tlv.map.addInteraction(tlv.layers[tlv.currentLayer].offsetLayerModifyInteraction);
+	}
+	else { changeFrameLayers(params); }
+}
+
+function crossHairToggleButtonClick(desiredState) {
 	var button = $("#layersCrossHairButton");
-	toggleButton(button, desiredStatus);
+	toggleButton(button, desiredState);
 
 	if (button.html() == "ON") { displayCrossHairLayer(); }
 	else { hideCrossHairLayer(); }
-}
-
-function searchOriginToggleButtonClick(desiredStatus) {
-	var button = $("#layersSearchOriginButton");
-	toggleButton(button, desiredStatus);
-
-	if (button.html() == "ON") { displaySearchOriginLayer(); }
-	else { hideSearchOriginLayer(); }
 }
 
 function displayCrossHairLayer() {
@@ -30,6 +67,40 @@ function displayCrossHairLayer() {
 	}
 	else { tlv.crossHairLayer.setVisible(true); }
 	refreshCrossHairLayer();
+}
+
+function displayOffsetLayer() {
+	$.each(
+		tlv.layers,
+		function(i, x) {
+			if (!x.offseyLayer) {
+				var mapCenter = tlv.map.getView().getCenter();
+				var point = new ol.geom.Point(mapCenter);
+				var feature = new ol.Feature(point);
+				
+				var fill = new ol.style.Fill({ color: "rgba(255, 255, 0, 1)" });
+				var circle = new ol.style.Circle({
+					fill: fill,
+					radius: 5
+				});
+				var style = new ol.style.Style({ image: circle });
+
+				x.offsetLayer = new ol.layer.Vector({ 
+					source: new ol.source.Vector({ features: [feature] }), 
+					style: style,
+					visible: false
+				});
+				tlv.map.addLayer(x.offsetLayer);
+
+				x.offsetLayerModifyInteraction = new ol.interaction.Modify({ features: new ol.Collection([feature]) });
+
+				if (i == tlv.currentLayer) {
+					x.offsetLayer.setVisible(true);
+					tlv.map.addInteraction(x.offsetLayerModifyInteraction);
+				}
+			}
+		}
+	);
 }
 
 function displaySearchOriginLayer() {
@@ -63,7 +134,25 @@ function displaySearchOriginLayer() {
 
 function hideCrossHairLayer() { tlv.crossHairLayer.setVisible(false); }
 
+function hideOffsetLayer() {
+	$.each(
+		tlv.layers,
+		function(i, x) { 
+			x.offsetLayer.setVisible(false); 
+			tlv.map.removeInteraction(x.offsetLayerModifyInteraction);
+		}
+	);
+}
+
 function hideSearchOriginLayer() { tlv.searchOriginLayer.setVisible(false); }
+
+function offsetToggleButtonClick(desiredState) {
+	var button = $("#layersOffsetButton");
+	toggleButton(button, desiredState);
+
+	if (button.html() == "ON") { displayOffsetLayer(); }
+	else { hideOffsetLayer(); }
+}
 
 function refreshCrossHairLayer() {
 	var mapCenter = tlv.map.getView().getCenter();
@@ -92,6 +181,14 @@ function refreshCrossHairLayer() {
 	var source = tlv.crossHairLayer.getSource();
         $.each(source.getFeatures(), function(i, x) { source.removeFeature(x); });
 	source.addFeatures([horizontalLineFeature, verticalLineFeature]);
+}
+
+function searchOriginToggleButtonClick(desiredState) {
+	var button = $("#layersSearchOriginButton");
+	toggleButton(button, desiredState);
+
+	if (button.html() == "ON") { displaySearchOriginLayer(); }
+	else { hideSearchOriginLayer(); }
 }
 
 var theMapHasMovedLayers = theMapHasMoved;
