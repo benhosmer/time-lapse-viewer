@@ -4,8 +4,8 @@ function beginSearch() {
 	$.ajax({
 		data: "searchParams=" + JSON.stringify(searchParams),
 		dataType: "json",
-		success: function(data) { 
-			tlv = data;
+		success: function(data) {
+			$.each(data, function(i, x) { tlv[i] = x; });
 
 			tlv.bbox = calculateInitialViewBbox();
 			setupTimeLapse(); 

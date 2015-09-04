@@ -30,6 +30,7 @@
 				<li role = "presentation">
 					<a data-toggle = "tab" href = "#timeLapseTab" role = "tab">Time Lapse</a>
 				</li>
+				<g:render template = "dropdown/layers"/>
 			</ul>
 
   			<div class="tab-content">

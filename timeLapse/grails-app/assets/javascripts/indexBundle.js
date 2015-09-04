@@ -10,3 +10,4 @@
 //= require search.js
 //= require searchPlugin.js
 //= require timeLapse.js
+//= require layers.js
