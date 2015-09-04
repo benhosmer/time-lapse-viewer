@@ -1,30 +1,30 @@
 function crossHairToggleButtonClick(desiredStatus) {
 	var button = $("#layersCrossHairButton");
-	if (desiredStatus) { button.html(desiredStatus); }
-	else { button.html(button.html() == "ON" ? "OFF" : "ON"); }
+	toggleButton(button, desiredStatus);
 
-	if (button.html() == "ON") {
-		displayCrossHairLayer();
-		button.removeClass("btn-danger");
-		button.addClass("btn-success");
-	}
-	else {
-		hideCrossHairLayer();
-		button.removeClass("btn-success");
-		button.addClass("btn-danger");
-	}
+	if (button.html() == "ON") { displayCrossHairLayer(); }
+	else { hideCrossHairLayer(); }
+}
+
+function searchOriginToggleButtonClick(desiredStatus) {
+	var button = $("#layersSearchOriginButton");
+	toggleButton(button, desiredStatus);
+
+	if (button.html() == "ON") { displaySearchOriginLayer(); }
+	else { hideSearchOriginLayer(); }
 }
 
 function displayCrossHairLayer() {
 	if (!tlv.crossHairLayer) {
+		var stroke = new ol.style.Stroke({
+			 color: "rgba(255, 255, 0, 1)",
+			 width: 2
+		});
+		var style = new ol.style.Style({ stroke: stroke });
+		
 		tlv.crossHairLayer = new ol.layer.Vector({
 			source: new ol.source.Vector(),
-			style: new ol.style.Style({
-				stroke: new ol.style.Stroke({
-					color: "rgba(255, 255, 0, 1)",
-					width: 2
-				})
-			})
+			style: style
 		});
 		tlv.map.addLayer(tlv.crossHairLayer);
 	}
@@ -32,7 +32,38 @@ function displayCrossHairLayer() {
 	refreshCrossHairLayer();
 }
 
+function displaySearchOriginLayer() {
+	if (!tlv.searchOriginLayer) {
+		var point = new ol.geom.Point(tlv.location);
+		var feature = new ol.Feature(point);
+
+		var fill = new ol.style.Fill({ color: "rgba(255, 255, 0, 1)"});
+		var circle = new ol.style.Circle({
+			fill: fill,
+			radius: 5
+		});
+		var text = new ol.style.Text({
+			fill: fill,
+			offsetY: 13,
+			text: "Search Origin"
+		});
+		var style = new ol.style.Style({
+			image: circle,
+			text: text
+		});
+
+		tlv.searchOriginLayer = new ol.layer.Vector({
+			source: new ol.source.Vector({ features: [feature] }),
+			style: style
+		});
+		tlv.map.addLayer(tlv.searchOriginLayer);
+	}
+	else { tlv.searchOriginLayer.setVisible(true); }
+}
+
 function hideCrossHairLayer() { tlv.crossHairLayer.setVisible(false); }
+
+function hideSearchOriginLayer() { tlv.searchOriginLayer.setVisible(false); }
 
 function refreshCrossHairLayer() {
 	var mapCenter = tlv.map.getView().getCenter();
@@ -80,4 +111,7 @@ setupTimeLapse = function() {
 		/* there is an error if the layer is enabled immediately after the map has been created */
 		setTimeout(function() { crossHairToggleButtonClick("ON"); }, 1); 
 	}
+
+	tlv.searchOriginLayer = null;
+	if (tlv.searchOriginLayerEnabled == "true") { searchOriginToggleButtonClick(); }
 }	
