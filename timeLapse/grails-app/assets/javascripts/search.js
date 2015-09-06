@@ -1,17 +1,24 @@
 function beginSearch() {
+	displayLoadingDialog("We are searching the libraries for imagery... fingers crossed!");
+
 	var searchParams = getSearchParams();
+	if (searchParams) {
+		$.ajax({
+			data: "searchParams=" + JSON.stringify(searchParams),
+			dataType: "json",
+			failure: function() { 
+				hideLoadingDiaog();
+				alert("Uh oh, something went wrong with your search!"); },
+			success: function(data) {
+				hideLoadingDialog();
+				$.each(data, function(i, x) { tlv[i] = x; });
 
-	$.ajax({
-		data: "searchParams=" + JSON.stringify(searchParams),
-		dataType: "json",
-		success: function(data) {
-			$.each(data, function(i, x) { tlv[i] = x; });
-
-			tlv.bbox = calculateInitialViewBbox();
-			setupTimeLapse(); 
-		},
-		url: "/timeLapse/home/searchLibrary"
-	});	
+				tlv.bbox = calculateInitialViewBbox();
+				setupTimeLapse(); 
+			},
+			url: "/timeLapse/home/searchLibrary"
+		});	
+	}
 }
 
 function calculateInitialViewBbox() {
@@ -83,8 +90,10 @@ function getSearchParams() {
 	var libraries = getSelectedLibraries();
 	searchObject.libraries = libraries;
 
-	var location = $("#searchTabLocationDiv").val().split(",").reverse();
-	searchObject.location = location;
+	var locationString = $("#searchTabLocationDiv").val();
+	var location = convertGeospatialCoordinateFormat(locationString);
+	if (!location) { return fasle; }
+	else { searchObject.location = location; }
 
 	var maxCloudCover = $("#searchTabMaxCloudCoverInput").val();
 	searchObject.maxCloudCover = maxCloudCover;
