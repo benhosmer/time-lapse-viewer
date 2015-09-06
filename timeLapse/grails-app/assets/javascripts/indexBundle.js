@@ -3,6 +3,7 @@
 //= require moment.js
 //= require bootstrap-datetimepicker.js
 //= require ol.js
+//= require coordinateConversion.js
 
 //= require prototype.js
 //= require pageLoad.js
@@ -10,4 +11,5 @@
 //= require search.js
 //= require searchPlugin.js
 //= require timeLapse.js
+//= require export.js
 //= require layers.js
