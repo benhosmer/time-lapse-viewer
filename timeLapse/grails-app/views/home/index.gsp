@@ -30,6 +30,7 @@
 				<li role = "presentation">
 					<a data-toggle = "tab" href = "#timeLapseTab" role = "tab">Time Lapse</a>
 				</li>
+				<g:render template = "dropdown/export"/>
 				<g:render template = "dropdown/layers"/>
 			</ul>
 
@@ -38,9 +39,11 @@
 					<g:render template = "searchTab"/>
 				</div>
 				<div class = "tab-pane" id = "timeLapseTab" role = "tabpanel">
-					<g:render template = "timeLapseTab"/>"
+					<g:render template = "timeLapseTab"/>
 				</div>
 			</div>
+
+			<g:render template = "dialogs"/>
 		</div>
 
 		<asset:deferredScripts/>

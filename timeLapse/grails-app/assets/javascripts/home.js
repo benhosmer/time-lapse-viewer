@@ -1,3 +1,27 @@
+function convertGeospatialCoordinateFormat(inputString) {
+	var ddPattern = /(\-?\d{1,2}[.]?\d*)\s*[,]?\s*(\-?\d{1,3}[.]?\d*)/;
+	var dmsPattern = /(\d{2})[^\d]*(\d{2})[^\d]*(\d{2}[.]?\d*)([n|N|s|S])[^\w]*(\d{3})[^\d]*(\d{2})[^d]*(\d{2}[.]?\d*)([e|E|w|W])/;
+	var mgrsPattern = /([A-Z][A-Z]\d{1})[^\w]*(\d{2})[^\w]*(\d{5})[^\w]*(\d{5})/;
+
+	var coordinateConversion = new CoordinateConversion();
+
+	if (inputString.match(dmsPattern)) {  
+		var latitude = coordinateConversion.dmsToDd(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4);
+		var longitude = coordinateConversion.dmsToDd(RegExp.$5, RegExp.$6, RegExp.$7, RegExp.$8);
+
+
+		return [longitude, latitude];
+	}
+	else if (inputString.match(ddPattern)) {
+		var latitude = RegExp.$1;
+		var longitude = RegExp.$2;
+
+
+		return [longitude, latitude];
+	}
+	else { return false;}
+};
+
 function convertRadiusToBbox(x, y, radius) {
 	/* radius * 1 nautical mile / 1852 meters * 1 minute latitude / 1 nautical mile * 1 deg latitude / 60 minute latitude */
 	var deltaLatitude = radius / 1852 / 60;
@@ -5,6 +29,11 @@ function convertRadiusToBbox(x, y, radius) {
 
 
 	return { maxLat: y + deltaLatitude, maxLon: x + deltaLongitude, minLat: y - deltaLatitude, minLon: x - deltaLongitude };
+}
+
+function displayLoadingDialog(message) { 
+	$("#loadingDialog").modal("show"); 
+	$("#loadingDialogMessageDiv").html(message);
 }
 
 function enableKeyboardShortcuts() {
@@ -21,6 +50,15 @@ function enableKeyboardShortcuts() {
 			}
 		}
 	);
+}
+
+function hideLoadingDialog() { $("#loadingDialog").modal("hide"); }
+
+function initializeLoadingDialog() { 
+	$("#loadingDialog").modal({ 
+		keyboard: false,
+		show: false
+	}); 
 }
 
 function toggleButton(button, desiredStatus) {

@@ -4,6 +4,8 @@ var tlv = {};
 $(document).ready(
 	function() {
 		setupSearchTab();
+
+		initializeLoadingDialog();
 		enableKeyboardShortcuts();
 	}
 );

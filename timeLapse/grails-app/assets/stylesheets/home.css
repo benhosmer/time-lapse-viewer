@@ -8,4 +8,12 @@ body, .dropdown-menu {
 	color: black;
 }
 
+.dropdown-menu > li > a { color: white; }
+
 input, select, textarea { background: #3D3c3a; }
+
+.modal-content {
+	background: black;
+	border: 1px solid white;
+	color: white;
+}
