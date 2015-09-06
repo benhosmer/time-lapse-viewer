@@ -1,3 +1,11 @@
+var addLayersToProxyMapLayers = addLayersToProxyMap;
+addLayersToProxyMap = function() {
+	addLayersToProxyMapLayers();
+	
+	if ($("#layersCrossHairButton").html() == "ON") { tlv.proxyMap.addLayer(tlv.crossHairLayer); }
+	if ($("#layersSearchOriginButton").html() == "ON") { tlv.proxyMap.addLayer(tlv.searchOriginLayer); }
+}
+
 function alignLayers() {
 	offsetToggleButtonClick("OFF");	
 
