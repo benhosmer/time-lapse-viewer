@@ -3,9 +3,11 @@ package timelapse
 
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
+import javax.imageio.ImageIO
 
 
 class HomeController {
+	def imageProxyService
 	def restApiService
 	def searchLibraryService
 	def wmsConversionService
@@ -16,6 +18,14 @@ class HomeController {
 
 	
 		render(view: "index.gsp", model: [tlvParams : JsonOutput.toJson(model)])
+	}
+
+	def proxyImage() {
+		def image = imageProxyService.serviceMethod(params)
+
+
+		response.contentType = "image/png"
+		ImageIO.write(image, "png", response.outputStream)
 	}
 
 	def searchLibrary() {
