@@ -30,18 +30,14 @@
 				<li role = "presentation">
 					<a data-toggle = "tab" href = "#timeLapseTab" role = "tab">Time Lapse</a>
 				</li>
-				<g:render template = "dropdown/export"/>
-				<g:render template = "dropdown/layers"/>
-				<g:render template = "dropdown/view"/>
+				<g:render template = "menus/export"/>
+				<g:render template = "menus/layers"/>
+				<g:render template = "menus/view"/>
 			</ul>
 
-  			<div class="tab-content">
-				<div class = "tab-pane active" id = "searchTab" role = "tabpanel">
-					<g:render template = "searchTab"/>
-				</div>
-				<div class = "tab-pane" id = "timeLapseTab" role = "tabpanel">
-					<g:render template = "timeLapseTab"/>
-				</div>
+  			<div class = "tab-content">
+				<g:render template = "searchTab"/>
+				<g:render template = "timeLapseTab"/>
 			</div>
 
 			<g:render template = "dialogs"/>
