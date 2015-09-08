@@ -1,11 +1,12 @@
-// global variable to hold all necessary information
-var tlv = {};
+function pageLoad() {
+	setupSearchTab();
 
-$(document).ready(
-	function() {
-		setupSearchTab();
+	$("#tlvTabs a[href='#timeLapseTab']").tab("show");
+	setupMap();
+	$("#tlvTabs a[href='#searchTab']").tab("show");
 
-		initializeLoadingDialog();
-		enableKeyboardShortcuts();
-	}
-);
+	initializeLoadingDialog();
+	enableKeyboardShortcuts();
+}
+
+$(document).ready(function() { pageLoad(); });
