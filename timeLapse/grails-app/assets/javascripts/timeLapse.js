@@ -55,9 +55,7 @@ function getNextFrameIndex() { return tlv.currentLayer >= tlv.layers.length - 1 
 
 function getPreviousFrameIndex() { return tlv.currentLayer <= 0 ? tlv.layers.length - 1 : tlv.currentLayer - 1; }
 
-function setupTimeLapse() {
-	$("#tlvTabs a[href='#timeLapseTab']").tab("show");
-
+function setupMap() {
 	// if a map already exists, reset it and start from scratch
 	if (tlv.map) { tlv.map.setTarget(null); }
 
@@ -81,10 +79,14 @@ function setupTimeLapse() {
 		]),
 		logo: false,
 		target: "map",
-		view: new ol.View({
-			projection: "EPSG:4326"
-		})
+		view: new ol.View({ projection: "EPSG:4326" })
 	});
+}
+
+function setupTimeLapse() {
+	$("#tlvTabs a[href='#timeLapseTab']").tab("show");
+
+	setupMap();
 
 	// setup interactions so rotation can be controlled independently
 	tlv.mapInteractions = {
