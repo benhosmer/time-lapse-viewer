@@ -1,9 +1,11 @@
 /*
 *= require bootstrap.css
 *= require bootstrap-datetimepicker.css
+*= require bootstrap-slider.css
 *= require ol.css
 
 *= require home.css
 *= require homePlugin.css
+*= require timeLapse.css
 *= require search.css
 */

@@ -32,6 +32,7 @@
 				</li>
 				<g:render template = "dropdown/export"/>
 				<g:render template = "dropdown/layers"/>
+				<g:render template = "dropdown/view"/>
 			</ul>
 
   			<div class="tab-content">
