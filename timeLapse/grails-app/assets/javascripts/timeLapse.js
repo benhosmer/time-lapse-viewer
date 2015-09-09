@@ -5,7 +5,7 @@ function addLayersToTheMap() {
 			var params = {
 				BANDS: x.bands ? x.bands : "2,1,0",
 				BRIGHTNESS: x.brightness ? x.brightness : 0,
-				CONTRAST: x.contrast ? x.contrast : 1,
+				CONTRAST: x.contrast ? x.contrast : 0,
 				DRA: x.dra ? x.dra : "auto",
 				DRA_AREA: x.draArea ? x.draArea : "viewport",
 				DRA_SIGMA: x.draSigma ? x.draSigma : 1,
