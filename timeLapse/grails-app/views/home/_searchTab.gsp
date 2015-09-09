@@ -2,7 +2,7 @@
 	<div class = "row">
 		<div class = "col-md-1"></div>
 		<div class = "col-md-11">
-			<table class = "table search-table">
+			<table class = "search-table table table-nolines">
 				<tr>
 					<td align = "right">Location:</td>
 					<td>
