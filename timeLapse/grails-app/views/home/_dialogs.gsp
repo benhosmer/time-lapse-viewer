@@ -6,10 +6,11 @@
 				<div id = "loadingDialogMessageDiv"></div>
 				<br>
 				<div class = "progress">
-					<div class = "progress-bar progress-bar-info progress-bar-striped" role = "progressbar" style = "width: 100%">
+					<div class = "progress-bar progress-bar-info progress-bar-striped" role = "progressbar" style = "width: 100%"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
+<g:render template = "menus/imagePropertiesDialog"/>

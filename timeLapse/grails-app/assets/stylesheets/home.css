@@ -20,4 +20,6 @@ input, select, textarea { background: #3D3c3a; }
 	color: white;
 }
 
-#swipeSlider .slider-selection, .slider-track-high { background: #303c3a; }
+.slider-selection, .slider-track-high { background: #303c3a; }
+
+.table-nolines th, .table-nolines td { border-top: none !important; }

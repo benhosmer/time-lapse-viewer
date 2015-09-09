@@ -31,6 +31,7 @@
 					<a data-toggle = "tab" href = "#timeLapseTab" role = "tab">Time Lapse</a>
 				</li>
 				<g:render template = "menus/export"/>
+				<g:render template = "menus/imageProperties"/>
 				<g:render template = "menus/layers"/>
 				<g:render template = "menus/view"/>
 			</ul>
