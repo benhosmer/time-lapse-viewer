@@ -12,11 +12,12 @@ class SearchLibraryService {
 
 
 	def extractMetadata(imageXml) {
-		def metadata = [:]
-		if (imageXml.azimuth_angle) { metadata.azimuthAngle = imageXml.azimuth_angle.text() as Double }
-		if (imageXml.filename) { metadata.filename = imageXml.filename.text() }
-		if (imageXml.index_id) { metadata.indexId = imageXml.index_id.text() }
-		if (imageXml.number_of_bands) { metadata.numberOfBands = imageXml.number_of_bands.text() as Integer }
+		def metadata = [
+			azimuthAngle: imageXml.azimuth_angle?.text() as Double ?: null,
+			filename: imageXml.filename.text() ?: null,
+			indexId: imageXml.index_id?.text() ?: null,
+			numberOfBands: imageXml.number_of_bands?.text() as Integer ?: null
+		]
 
 
 		return metadata
