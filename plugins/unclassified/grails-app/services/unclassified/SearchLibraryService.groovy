@@ -24,18 +24,50 @@ class SearchLibraryService {
 	}
 	
 	def searchOmar(params, library) {
-		def queryUrl = grailsApplication.config.libraries["${library}"].baseUrl
+		def libraryObject = grailsApplication.config.libraries["${library}"]
+
+		def queryUrl = libraryObject.baseUrl
 		queryUrl += "/omar/wfs"
 
-		def filter
-		def filterArray = []
-		//filterArray.push("acquisition_date>${params.startYear}-${params.startMonth}-${params.startDay}T${params.startHour}:${params.startHour}:${params.startSecond}")
-		//filterArray.push("acquisition_date<${params.endYear}-${params.endMonth}-${params.endDay}T${params.endHour}:${params.endHour}:${params.endSecond}")
+		def filter = ""
+		
+		// acquisition date
+		def startDate = "${params.startYear}-${params.startMonth}-${params.startDay}T${params.startHour}:${params.startHour}:${params.startSecond}.000"
+		def endDate = "${params.endYear}-${params.endMonth}-${params.endDay}T${params.endHour}:${params.endHour}:${params.endSecond}.000"
+		filter += "((acquisition_date > ${startDate} AND acquisition_date < ${endDate}) OR acquisition_date IS NULL)"
+		
+		filter += " AND "
 
+		// cloud cover
+		filter += "(cloud_cover < ${params.maxCloudCover} OR cloud_cover IS NULL)"
+
+		filter += " AND "
+
+		// dwithin
 		def deltaDegrees = mathConversionService.convertRadiusToDeltaDegrees(params)
-		filterArray.push("DWITHIN(ground_geom,POINT(${params.location.join(" ")}),${deltaDegrees},meters)")
+                filter += "DWITHIN(ground_geom,POINT(${params.location.join(" ")}),${deltaDegrees},meters)"
 
-		filter = filterArray.join("AND")
+		filter += " AND "
+
+		// niirs
+		filter += "(niirs < ${params.minNiirs} OR niirs IS NULL)"
+
+		// sensors
+		if (params.sensors.find { it == "all" } != "all") {
+			filter += " AND "
+
+			// only search for sensors that are available in the library
+			def availableSensors = libraryObject.sensors
+			def sensorFilters = []
+			params.sensors.each() {
+				def sensor = it
+				if (sensor == availableSensors.find({ it.name == sensor }).name) { sensorFilters.push("sensor_id ILIKE '%${sensor}%'") }
+			}
+			sensorFilters.push("sensor_id IS NULL")
+			filter += "(${sensorFilters.join(" OR ")})"
+		}		
+
+println filter
 
 		queryUrl += "?filter=" + URLEncoder.encode(filter)
  
@@ -44,7 +76,7 @@ class SearchLibraryService {
 		queryUrl += "&service=WFS"
 		queryUrl += "&typeName=omar:raster_entry"
 		queryUrl += "&version=1.0.0"
-
+println queryUrl
 		def xml = httpDownloadService.serviceMethod([url: queryUrl])
 		
 		def imageArray = []
@@ -71,10 +103,14 @@ class SearchLibraryService {
 			location: params.location.collect({ it as Double })
 		]
 		
-		params.libraries.each() {	
-			def library = it	
-			resultsMap.layers += searchOmar(params, library)
+		params.libraries.each() { resultsMap.layers += searchOmar(params, it) }
+
+	
+		if (resultsMap.layers.size() > params.maxResults) { 
+			def howManyToDrop = resultsMap.layers.size() - paams.maxResults
+			resultsMap.layers = resultsMap.reverse().drop(howManyToDrop).reverse() 
 		}
+
 
 		return resultsMap
 	}
