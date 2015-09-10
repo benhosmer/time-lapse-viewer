@@ -124,8 +124,14 @@ grails.resources.work.dir = ".resources"
 libraries {
 	omar {
 		sensors = [
-			description: "Commercial: Panchromatic",
-			name: "vis"
+			[
+				description: "Commercial: Multispectral",
+				name: "msi"
+			],
+			[
+				description: "Commercial: Panchromatic",
+				name: "vis"
+			]
 		]
 		baseUrl = "http://omar.ossim.org"
 		label = "OMAR"
@@ -136,7 +142,16 @@ libraries {
 */
 libraries {
 	omar {
-		sensors = []
+		sensors = [
+			[
+				description: "Commercial: Multispectral",
+				name: "msi"
+			],
+			[
+				description: "Commercial: Panchromatic",
+				name: "vis"
+			]
+		]
 		baseUrl = "http://omar.ossim.org"
 		label = "OMAR"
 		relativeApplicationViewUrl = "/omar/mapView/index"
