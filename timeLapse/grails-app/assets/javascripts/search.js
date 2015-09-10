@@ -59,11 +59,21 @@ function enableSensorCheckbox(sensorName) {
 
 function getDate(date) {
 	var year = date.getFullYear();
-	var month = date.getMonth() + 1;
+
+	var month = date.getMonth() + 1; 
+	month = month < 10 ? "0" + month : month;
+
 	var day = date.getDate();
+	day = day < 10 ? "0" + day : day;
+
 	var hour = date.getHours();
+	hour = hour < 10 ? "0" + hour : hour;
+
 	var minute = date.getMinutes();
+	minute = minute < 10 ? "0" + minute : minute;
+
 	var second = date.getSeconds();
+	second = second < 10 ? "0" + second : second;
 
 
 	return { day: day, hour: hour, minute: minute, month: month, second: second, year: year };
@@ -99,16 +109,16 @@ function getSearchParams() {
 	searchObject.maxCloudCover = maxCloudCover;
 
 	var maxResults = $("#searchTabMaxResultsSelect").val();
-	searchObject.maxResults = maxResults;
+	searchObject.maxResults = parseInt(maxResults);
 
 	var minNiirs = $("#searchTabMinNiirsInput").val();
-	searchObject.minNiirs = minNiirs
+	searchObject.minNiirs = parseFloat(minNiirs);
 
 	var radius = $("#searchTabRadiusSelect").val();
-	searchObject.radius = radius;
+	searchObject.radius = parseInt(radius);
 
 	var sensors = getSelectedSensors();
-	searchObject.sensor = sensors;
+	searchObject.sensors = sensors;
 
 	var startDate = getStartDate();
 	searchObject.startYear = startDate.year;
