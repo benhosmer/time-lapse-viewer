@@ -13,4 +13,6 @@
 	</div>
 </div>
 
-<g:render template = "menus/imagePropertiesDialog"/>
+<g:render template = "searchTabDialogs"/>
+
+<g:render template = "menus/imagePropertiesDialogs"/>

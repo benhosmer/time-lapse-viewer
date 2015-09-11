@@ -21,6 +21,23 @@ function beginSearch() {
 	}
 }
 
+function bookmarkSearchParams() {
+	var url = location.origin + "/timeLapse/home?";
+
+	var searchParams = [];
+	$.each(
+		getSearchParams(),
+		function(i, x) {
+			if (Array.isArray(x)) { searchParams.push(i + "=" + x.join()); }
+			else { searchParams.push(i + "=" + x); }
+		}
+	);
+	url += searchParams.join("&");
+
+	$("#searchBookmarkHref").attr("href", url);
+	$("#searchBookmarkDialog").modal("show");
+}
+
 function calculateInitialViewBbox() {
 	var bbox = convertRadiusToBbox(tlv.location[0], tlv.location[1], 1000); 
 
@@ -188,12 +205,19 @@ function initializeEndDateTimePicker() {
 function initializeLibraryCheckboxes() {
 	if (tlv.libraries) {
 		$.each(
-			tlv.libraries,
+			tlv.libraries.split(","),
 			function(i, x) {
 				var libraryCheckbox = $("#searchTabLibrary" + x.capitalize() + "Checkbox");
 				libraryCheckbox.trigger("click");
 			}
 		);
+	}
+}
+
+function initializeLocationInput() {
+	if (tlv.location) {
+		$("#searchTabLocationInput").val(tlv.location);
+		beginSearch();
 	}
 }
 
@@ -274,11 +298,15 @@ function librarySensorCheck() {
 }
 
 function setupSearchTab() {
+	// start with the end date since the start date's default is based on the end date
 	initializeEndDateTimePicker();
 	initializeStartDateTimePicker();
+
 	initializeSensorCheckboxes();
 	initializeMinNiirsInput();
 	initializeMaxCloudCoverInput();
 	initializeMaxResultsSelect();
 	initializeLibraryCheckboxes();
+
+	initializeLocationInput();
 }

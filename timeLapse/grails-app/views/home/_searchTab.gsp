@@ -53,7 +53,7 @@
 				</tr>
 				<tr>
 					<td align = "right">Min. NIIRS:</td>
-					<td><input id = "searchTabMinNiirsInput" max = "9" min = "0" step = "0.1" ty"></td>
+					<td><input id = "searchTabMinNiirsInput" max = "9" min = "0" step = "0.1" type = "number"></td>
 				</tr>
 				<tr>
 					<td align = "right">Max. Cloud Cover (%):</td>
@@ -86,4 +86,6 @@
 	</div>
 
 	<button class = "btn btn-primary" onclick = "javascript:beginSearch()">Search</button>
+	<br><br>
+	<a href = "javascript:void(0)" onclick = "bookmarkSearchParams()">Bookmark It!</a>
 </div>
