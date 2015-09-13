@@ -19,6 +19,18 @@ class ExportService {
 		return image
 	}
 
+	def convertMetadataToCsv(params) {
+		def layers = params as Collection
+
+		// csv headers
+		def stringBuffer = layers[0].collect({ it.key }).join(",") + "\n"
+		// csv metadata
+		layers.each() { stringBuffer += it.collect({ it.value }).join(",") + "\n" }
+	
+
+		return stringBuffer
+	}
+
 	def getImageData(params, request) {
 		def imageData
 		if (params.imageData) { imageData = params.imageData }
@@ -35,7 +47,6 @@ class ExportService {
 		
 		return imageData
 	}
-
 
     def serviceMethod() {
 

@@ -12,4 +12,4 @@
 //= require search.js
 //= require searchPlugin.js
 //= require timeLapse.js
-//= require_tree dropdown
+//= require_tree menus

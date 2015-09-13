@@ -50,21 +50,50 @@ function checkProxyMapLoadStatus(callbackFunction) {
 	else ( setTimeout(function() { checkProxyMapLoadStatus(callbackFunction); }, 1000) )
 }
 
+function createForm() {
+	var form = document.createElement("form");
+	form.method = "post";
+	form.target = "_blank";
+	$("body").append(form);
+
+	var input = document.createElement("input");
+	input.type = "hidden";
+               
+	form.appendChild(input);
+
+
+	return [form, input];
+}
+
+function exportMetadata() {
+	var metadataLayers = [];
+	$.each(tlv.layers, function(i, x) { metadataLayers.push(x.metadata); });
+
+	var formInputArray = createForm();
+
+	var form = formInputArray[0];
+	form.action = "/timeLapse/export/exportMetadata";
+
+	var input = formInputArray[1];                
+	input.name = "metadata";
+	input.value = JSON.stringify(metadataLayers);
+
+	form.submit();
+	form.remove();
+}
+
 function exportScreenshot() {		
 	setupProxyMap();
 
 	var exportCanvas = function(canvasData) {
-		var form = document.createElement("form");
-		form.action = "/timeLapse/export/exportCanvas";
-		form.method = "post";
-		form.target = "_blank";
-		$("body").append(form);
+		var formInputArray = createForm();
 
-		var input = document.createElement("input");
+		var form = formInputArray[0];
+		form.action = "/timeLapse/export/exportCanvas";
+
+		var input = formInputArray[1];
 		input.name = "imageData";
-		input.type = "hidden";
 		input.value = canvasData;
-		form.appendChild(input);
 
 		form.submit();
 		form.remove();
