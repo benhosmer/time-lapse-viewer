@@ -55,6 +55,12 @@ function getNextFrameIndex() { return tlv.currentLayer >= tlv.layers.length - 1 
 
 function getPreviousFrameIndex() { return tlv.currentLayer <= 0 ? tlv.layers.length - 1 : tlv.currentLayer - 1; }
 
+var pageLoadTimeLapse = pageLoad;
+pageLoad = function() {
+	pageLoadTimeLapse();
+	setupMap();
+}
+
 function setupMap() {
 	// if a map already exists, reset it and start from scratch
 	if (tlv.map) { tlv.map.setTarget(null); }
@@ -84,8 +90,6 @@ function setupMap() {
 }
 
 function setupTimeLapse() {
-	$("#tlvTabs a[href='#timeLapseTab']").tab("show");
-
 	setupMap();
 
 	// setup interactions so rotation can be controlled independently
