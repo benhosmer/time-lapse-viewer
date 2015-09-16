@@ -13,6 +13,6 @@
 	</div>
 </div>
 
-<g:render template = "searchTabDialogs"/>
-
-<g:render template = "menus/imagePropertiesDialogs"/>
+<g:render template = "menus/exportMenuDialogs"/>
+<g:render template = "menus/imagePropertiesMenuDialogs"/>
+<g:render template = "menus/searchMenuDialogs"/>

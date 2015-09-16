@@ -13,36 +13,31 @@
     		<asset:javascript src = "indexBundle.js"/>
 	</head>
 	<body>
-		<div class = "container-fluid">
+		<div class = "container-fluid" style = "height: 100%">
 			<g:render template = "../securityClassificationHeader"/>
 
-			<div class = "row">
-				<div class = "col-md-2"></div>
-				<div class = "col-md-8">
-					<h1 align = "center">Time Lapse Viewer (TLV)</h1>
-				</div>
-				<div class = "col-md-2"></div>
-			</div>
-			<ul class = "nav nav-tabs" id = "tlvTabs" role = "tablist">
-				<li class = "active" role = "presentation">
-					<a data-toggle = "tab" href = "#searchTab" role = "tab">Search</a>
-				</li>
-				<li role = "presentation">
-					<a data-toggle = "tab" href = "#timeLapseTab" role = "tab">Time Lapse</a>
-				</li>
-				<g:render template = "menus/export"/>
-				<g:render template = "menus/imageProperties"/>
-				<g:render template = "menus/layers"/>
-				<g:render template = "menus/view"/>
-			</ul>
-
-  			<div class = "tab-content">
-				<g:render template = "searchTab"/>
-				<g:render template = "timeLapseTab"/>
-			</div>
+			<nav class = "navbar navbar-default navbar-inverse navbar-static-top">
+				<div class = "container-fluid">
+					<div class = "navbar-header"><a class = "navbar-brand" href = "/timeLapse/home">TLV</a></div>
+					<div class = "collapse navbar-collapse">
+						<ul class = "nav navbar-nav">
+							<g:render template = "menus/searchMenu"/>
+							<g:render template = "menus/exportMenu"/>
+							<g:render template = "menus/imagePropertiesMenu"/>
+							<g:render template = "menus/layersMenu"/>
+							<g:render template = "menus/viewMenu"/>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#">Help</a></li>
+						</ul>
+					</div>
+				</div>		
+			</nav>
+					
+			<g:render template = "timeLapse"/>  
 
 			<g:render template = "dialogs"/>
-		</div>
+		</div> 
 
 		<asset:deferredScripts/>
 	</body>
