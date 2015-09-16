@@ -69,12 +69,8 @@ function exportMetadata() {
 	var metadataLayers = [];
 	$.each(tlv.layers, function(i, x) { metadataLayers.push(x.metadata); });
 
-	var formInputArray = createForm();
-
-	var form = formInputArray[0];
-	form.action = "/timeLapse/export/exportMetadata";
-
-	var input = formInputArray[1];                
+	var [form, input] = createForm();
+	form.action = "/timeLapse/export/exportMetadata";          
 	input.name = "metadata";
 	input.value = JSON.stringify(metadataLayers);
 
@@ -86,12 +82,8 @@ function exportScreenshot() {
 	setupProxyMap();
 
 	var exportCanvas = function(canvasData) {
-		var formInputArray = createForm();
-
-		var form = formInputArray[0];
+		var [form, input] = createForm();
 		form.action = "/timeLapse/export/exportCanvas";
-
-		var input = formInputArray[1];
 		input.name = "imageData";
 		input.value = canvasData;
 
