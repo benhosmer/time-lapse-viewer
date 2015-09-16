@@ -1,25 +1,7 @@
-a { color: yellow; }
+html, body, #map { height: 100%; }
 
-body, .dropdown-menu {
-	background: black;
-	color: white;
-}
+body { padding-top: 20px; }
 
-.btn-primary.active { 
-	background: yellow; 
-	color: black;
-}
-
-.dropdown-menu > li > a { color: white; }
-
-input, select, textarea { background: #3D3c3a; }
-
-.modal-content {
-	background: black;
-	border: 1px solid white;
-	color: white;
-}
+.navbar { margin-bottom: 0px; }
 
 .slider-selection, .slider-track-high { background: #303c3a; }
-
-.table-nolines th, .table-nolines td { border-top: none !important; }
