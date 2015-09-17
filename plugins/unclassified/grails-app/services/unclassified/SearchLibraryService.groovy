@@ -13,6 +13,7 @@ class SearchLibraryService {
 
 	def extractMetadata(imageXml) {
 		def metadata = [
+			acquisitionDate: imageXml.acquisitionDate?.text() ?: null,
 			azimuthAngle: imageXml.azimuth_angle?.text() as Double ?: null,
 			filename: imageXml.filename.text() ?: null,
 			indexId: imageXml.index_id?.text() ?: null,
