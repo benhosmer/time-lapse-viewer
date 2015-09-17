@@ -1,7 +1,7 @@
 <div class = "modal" id = "imagePropertiesDialog">
 	<div class = "modal-dialog">
  		<div class = "modal-content">
-			<div class = "modal-header"><h1>Image Properties</h1></div>
+			<div class = "modal-header"><h4>Image Properties</h4></div>
 			<div class = "modal-body">
 				<div class = "row">
 					<div class = "col-md-2">Bands:</div>

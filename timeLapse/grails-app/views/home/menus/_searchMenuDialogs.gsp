@@ -15,7 +15,7 @@
 <div class = "modal" id = "searchDialog">
 	<div class = "modal-dialog modal-lg">
 		<div class = "modal-content">
-			<div class = "modal-header"><h1>Search Parameters</h1></div>
+			<div class = "modal-header"><h4>Search Parameters</h4></div>
 			<div class = "modal-body">
 				<div class = "row">
 					<div align = "right" class = "col-md-3">Location:</div>

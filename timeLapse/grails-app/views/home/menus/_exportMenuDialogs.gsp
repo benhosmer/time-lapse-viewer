@@ -1,7 +1,7 @@
 <div class = "modal" id = "exportDialog">
 	<div class = "modal-dialog">
  		<div class = "modal-content">
-			<div class = "modal-header"><h1>Image Properties</h1></div>
+			<div class = "modal-header"><h4></h4></div>
 			<div class = "modal-body">
 					
 			</div>

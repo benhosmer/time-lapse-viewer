@@ -49,6 +49,44 @@ function changeFrame(param) {
 	tlv.layers[tlv.currentLayer].mapLayer.setVisible(true);
 
 	tlv.map.renderSync();
+
+	updateImageId();
+	updateAcquisitionDate();
+	updateTlvLayerCount();
+}
+
+function deleteFrame() {
+	changeFrame("rewind");
+
+	var nextFrameIndex = getNextFrameIndex();
+	var spliceIndex = nextFrameIndex == 0 ? 0 : nextFrameIndex;
+	tlv.layers.splice(spliceIndex, 1);
+	tlv.currentLayer = tlv.currentLayer > tlv.layers.length - 1 && tlv.layers.length - 1; 
+
+	changeFrame("fastForward");
+}
+
+function disableMapRotation() {
+	tlv.map.removeInteraction(tlv.mapInteractions.dragRotate);
+	tlv.map.addInteraction(tlv.mapInteractions.dragPan);
+}
+
+function enableDisableMapRotation(button) {
+	var text = button.innerHTML;
+	if (text.contains("Enable")) {
+		enableMapRotation();
+		text = text.replace("Enable", "Disable");
+	}
+	else {
+		disableMapRotation();
+		text = text.replace("Disable", "Enable");
+	}
+	button.innerHTML = text;
+}
+
+function enableMapRotation() {
+	tlv.map.removeInteraction(tlv.mapInteractions.dragPan);
+	tlv.map.addInteraction(tlv.mapInteractions.dragRotate);
 }
 
 function getNextFrameIndex() { return tlv.currentLayer >= tlv.layers.length - 1 ? 0 : tlv.currentLayer + 1; }
@@ -59,6 +97,26 @@ var pageLoadTimeLapse = pageLoad;
 pageLoad = function() {
 	pageLoadTimeLapse();
 	setupMap();
+}
+
+function playStopTimeLapse(button) { 
+	var className = button.className;
+	
+	$(button).removeClass(className);
+	if (className.contains("play")) { 
+		playTimeLapse(); 
+		className = className.replace("play", "stop");
+	}
+	else { 
+		stopTimeLapse(); 
+		className = className.replace("stop", "play");
+	}
+	$(button).addClass(className);
+}
+
+function playTimeLapse() {
+	changeFrame("fastForward");
+	tlv.timeLapseAdvance = setTimeout("playTimeLapse()", 1000);
 }
 
 function setupMap() {
@@ -113,4 +171,15 @@ function setupTimeLapse() {
 	for (var i = 0; i < tlv.layers.length; i++) { changeFrame("fastForward"); }
 }
 
+function stopTimeLapse() { clearTimeout(tlv.timeLapseAdvance); }
+
 function theMapHasMoved() { /* place holder to be overriden by other functions */ }
+
+function updateAcquisitionDate() { $("#acquisitionDateDiv").html(tlv.layers[tlv.currentLayer].metadata.acquisitionDate); }
+
+function updateImageId() { $("#imageIdDiv").html(tlv.layers[tlv.currentLayer].imageId); }
+
+function updateTlvLayerCount() {
+	var currentCount = tlv.currentLayer + 1;
+	$("#tlvLayerCountSpan").html(currentCount + "/" + tlv.layers.length);
+}

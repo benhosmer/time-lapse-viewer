@@ -13,26 +13,10 @@
     		<asset:javascript src = "indexBundle.js"/>
 	</head>
 	<body>
-		<div class = "container-fluid" style = "height: 100%">
+		<div class = "container-fluid">
 			<g:render template = "../securityClassificationHeader"/>
 
-			<nav class = "navbar navbar-default navbar-inverse navbar-static-top">
-				<div class = "container-fluid">
-					<div class = "navbar-header"><a class = "navbar-brand" href = "/timeLapse/home">TLV</a></div>
-					<div class = "collapse navbar-collapse">
-						<ul class = "nav navbar-nav">
-							<g:render template = "menus/searchMenu"/>
-							<g:render template = "menus/exportMenu"/>
-							<g:render template = "menus/imagePropertiesMenu"/>
-							<g:render template = "menus/layersMenu"/>
-							<g:render template = "menus/viewMenu"/>
-						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li><a href="#">Help</a></li>
-						</ul>
-					</div>
-				</div>		
-			</nav>
+			<g:render template = "navigationMenu"/>				
 					
 			<g:render template = "timeLapse"/>  
 

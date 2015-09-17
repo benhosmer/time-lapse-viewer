@@ -6,7 +6,7 @@
 				<div id = "loadingDialogMessageDiv"></div>
 				<br>
 				<div class = "progress">
-					<div class = "progress-bar progress-bar-info progress-bar-striped" role = "progressbar" style = "width: 100%"></div>
+					<div class = "progress-bar progress-bar-striped" role = "progressbar" style = "width: 100%"></div>
 				</div>
 			</div>
 		</div>
@@ -16,3 +16,4 @@
 <g:render template = "menus/exportMenuDialogs"/>
 <g:render template = "menus/imagePropertiesMenuDialogs"/>
 <g:render template = "menus/searchMenuDialogs"/>
+<g:render template = "menus/timeLapseMenuFunctionsDialogs"/>
