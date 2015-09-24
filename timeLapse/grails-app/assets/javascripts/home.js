@@ -19,7 +19,13 @@ function convertGeospatialCoordinateFormat(inputString) {
 
 		return [longitude, latitude];
 	}
-	else { return false;}
+	else if (inputString.match(mgrsPattern)) {
+		var location = coordinateConversion.mgrsToDd(RegExp.$1)
+
+
+		return convertGeospatialCoordinateFormat(location);
+	}
+	else { return false; }
 };
 
 function convertRadiusToBbox(x, y, radius) {
