@@ -79,4 +79,4 @@ grails.project.dependency.resolution = {
 
 grails.dependency.cache.dir = ".workdir/dependencies"
 grails.plugin.location.httpBuilder = "../plugins/httpBuilder"
-grails.plugin.location.unclassified = "../plugins/unclassified"
+grails.plugin.location.networkSpecific = "../plugins/networkSpecific"
