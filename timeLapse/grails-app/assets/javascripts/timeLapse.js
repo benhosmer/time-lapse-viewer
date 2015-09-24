@@ -89,6 +89,12 @@ function enableMapRotation() {
 	tlv.map.addInteraction(tlv.mapInteractions.dragRotate);
 }
 
+function geoJump() {
+	var location = $("#geoJumpLocationInput").val();
+	var point = convertGeospatialCoordinateFormat(location);
+	tlv.map.getView().setCenter(point); 
+}
+
 function getNextFrameIndex() { return tlv.currentLayer >= tlv.layers.length - 1 ? 0 : tlv.currentLayer + 1; }
 
 function getPreviousFrameIndex() { return tlv.currentLayer <= 0 ? tlv.layers.length - 1 : tlv.currentLayer - 1; }

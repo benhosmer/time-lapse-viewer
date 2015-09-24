@@ -65,6 +65,35 @@ function createForm() {
 	return [form, input];
 }
 
+function exportImage() {
+	setupProxyMap();
+	
+	var exportParams = getExportImageParams();
+	var exportCanvas = function(canvasData) {
+		var [form, input] = createForm();
+		form.action = "/timeLapse/template/exportImage";
+		input.name = "imageData";
+		input.value = canvasData;
+
+		$.each(
+			exportParams,
+			function(key, value) {
+				var element = document.createElement("input");
+				element.name = key;
+				element.type = "hidden";
+				element.value = value;
+
+				form.appendChild(element);
+			}
+		);
+
+		form.submit();
+		form.remove();
+	}
+
+	checkProxyMapLoadStatus(exportCanvas);
+}
+
 function exportMetadata() {
 	var metadataLayers = [];
 	$.each(tlv.layers, function(i, x) { metadataLayers.push(x.metadata); });
@@ -94,6 +123,21 @@ function exportScreenshot() {
 	checkProxyMapLoadStatus(exportCanvas);
 }
 
+function getExportImageParams() {
+	var params = {
+		date: $("#exportImageDateInput").val(),
+		description: $("#exportImageDescriptionInput").val(),
+		footerSecurityClassification: $("#exportImageFooterSecurityClassificationInput").val(),
+		headerSecurityClassification: $("#exportImageHeaderSecurityClassificationInput").val(),
+		location: $("#exportImageLocationInput").val(),
+		logo: $("#exportImageLogoSelect").val(),
+		title: $("#exportImageTitleInput").val()
+	};
+	
+
+	return params;
+}
+
 function getProxyMapCanvasData(callbackFunction) {
 	tlv.proxyMap.once(
 		"postcompose", 
@@ -105,6 +149,24 @@ function getProxyMapCanvasData(callbackFunction) {
 		}
 	);
 	tlv.proxyMap.renderSync();
+}
+
+function prepareExportImageDialog() {
+	var layer = tlv.layers[tlv.currentLayer];
+	var metadata = layer.metadata;
+
+	$("#exportImageDateInput").val(layer.metadata.acquisitionDate);
+	$("#exportImageDescriptionInput").val(layer.metadata.countryCode);
+	$("#exportImageFooterSecurityClassificationInput").val(metadata.securityClassification);
+	$("#exportImageHeaderSecurityClassificationInput").val(metadata.securityClassification);
+
+	var coordinateConversion = new CoordinateConversion();
+	var [longitude, latitude] = tlv.map.getView().getCenter();
+	var dms = coordinateConversion.ddToDms(latitude, "lat") + " " + coordinateConversion.ddToDms(longitude, "lon");	
+	var mgrs = coordinateConversion.ddToMgrs(latitude, longitude);
+	$("#exportImageLocationInput").val("DMS: " + dms + " MGRS: " + mgrs);
+
+	$("#exportImageTitleInput").val(layer.imageId);
 }
 
 function setupProxyMap() {

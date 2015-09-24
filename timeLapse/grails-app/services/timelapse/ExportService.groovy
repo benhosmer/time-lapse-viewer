@@ -31,24 +31,5 @@ class ExportService {
 		return stringBuffer
 	}
 
-	def getImageData(params, request) {
-		def imageData
-		if (params.imageData) { imageData = params.imageData }
-		else {
-			def requestMap = request.reader.text.split('&').inject([:]) { 
-				map, token ->		
-				token.split('=').with { map[it[0]] = it[1] }
-				map
-			}
-		
-			imageData = java.net.URLDecoder.decode(requestMap.imageData)
-		}
-
-		
-		return imageData
-	}
-
-    def serviceMethod() {
-
-    }
+	def serviceMethod() {}
 }

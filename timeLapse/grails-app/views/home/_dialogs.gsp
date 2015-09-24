@@ -1,8 +1,8 @@
 <div class = "modal" id = "loadingDialog">
 	<div class = "modal-dialog">
 		<div class = "modal-content">
+			<div class = "modal-header"><h4>Please wait...</h4></div>"
 			<div class = "modal-body">
-				<h1>Please wait...</h1>
 				<div id = "loadingDialogMessageDiv"></div>
 				<br>
 				<div class = "progress">
