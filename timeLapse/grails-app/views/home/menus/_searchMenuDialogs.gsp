@@ -32,25 +32,11 @@
 					</tr>
 					<tr>
 						<td align = "right">Start Date:</td>
-						<td>
-							<div class = "input-group date" id = "searchTabStartDateTimePicker">
-								<input type = "text">
-								<span class = "input-group-addon">
-									<span class = "glyphicon glyphicon-calendar"></span>
-								</span>
-							</div>
-						</td>
+						<td><input type = "text" id = "searchTabStartDateTimePicker"/></td>
 					</tr>
 					<tr>
 						<td align = "right">End Date:</td>
-						<td>
-							<div class = "input-group date" id = "searchTabEndDateTimePicker">
-								<input type = "text">
-								<span class = "input-group-addon">
-									<span class = "glyphicon glyphicon-calendar"></span>
-								</span>
-							</div>
-						</td>
+						<td><input type = "text" id = "searchTabEndDateTimePicker"/></td>
 					</tr>
 					<tr>
 						<td align = "right">Sensor:</td>
