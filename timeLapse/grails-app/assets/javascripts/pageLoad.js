@@ -1,5 +1,8 @@
 function pageLoad() {
 	initializeLoadingDialog();
+
+	disableMenuButtons();
+
 	enableKeyboardShortcuts();
 }
 

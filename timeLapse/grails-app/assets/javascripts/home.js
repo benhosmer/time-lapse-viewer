@@ -37,9 +37,19 @@ function convertRadiusToBbox(x, y, radius) {
 	return { maxLat: y + deltaLatitude, maxLon: x + deltaLongitude, minLat: y - deltaLatitude, minLon: x - deltaLongitude };
 }
 
+function disableMenuButtons() {
+	var menuButtons = $(".navbar-nav")[0].children;
+	for (var i = 1; i < menuButtons.length; i++) { $(menuButtons[i]).hide(); }
+}
+
 function displayLoadingDialog(message) { 
 	$("#loadingDialog").modal("show"); 
 	$("#loadingDialogMessageDiv").html(message);
+}
+
+function enableMenuButtons() {
+	var menuButtons = $(".navbar-nav")[0].children;
+	for (var i = 1; i < menuButtons.length; i++) { $(menuButtons[i]).show(); }
 }
 
 function enableKeyboardShortcuts() {
