@@ -59,7 +59,7 @@ class NorthArrowService {
 		// draw the N
 		def nHeight = (0.5 * innerCircleDiameter) as Integer
 		def nWidth = (0.35 * innerCircleDiameter) as Integer
-		def nBottomY = innerCircleX + innerCircleDiameter / 2 + nHeight / 2
+		def nBottomY = innerCircleY + innerCircleDiameter / 2 + nHeight / 2
 		def nTopY = innerCircleY + innerCircleDiameter / 2 - nHeight / 2 
 		def nRightX = innerCircleX + innerCircleDiameter / 2 + strokeWidth / 2
 		def nLeftX = nRightX - nWidth
