@@ -47,7 +47,7 @@ class TemplateExportDefaultService {
 		def logoWidth = logoHeight as Integer
 		def logoImage = imageScalingService.serviceMethod([
 			height: logoHeight,
-			image: ImageIO.read(assetResourceLocator.findAssetForURI("logos/nro.png").inputStream)
+			image: ImageIO.read(assetResourceLocator.findAssetForURI("logos/${params.logo}.png").inputStream)
 		])
 		def logoOffsetX = (headerHeight - logoHeight) / 2 as Integer
 		def logoOffsetY = logoOffsetX as Integer
