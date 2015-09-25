@@ -70,7 +70,10 @@ function exportImage() {
 	
 	var exportParams = getExportImageParams();
 	var exportCanvas = function(canvasData) {
-		var [form, input] = createForm();
+		var elements = createForm();
+		var form = elements[0];
+		var input = elements[1];
+
 		form.action = "/timeLapse/template/exportImage";
 		input.name = "imageData";
 		input.value = canvasData;
@@ -98,7 +101,10 @@ function exportMetadata() {
 	var metadataLayers = [];
 	$.each(tlv.layers, function(i, x) { metadataLayers.push(x.metadata); });
 
-	var [form, input] = createForm();
+	var elements = createForm();
+	var form = elements[0];
+	var input = elements[1];
+
 	form.action = "/timeLapse/export/exportMetadata";          
 	input.name = "metadata";
 	input.value = JSON.stringify(metadataLayers);
@@ -111,7 +117,10 @@ function exportScreenshot() {
 	setupProxyMap();
 
 	var exportCanvas = function(canvasData) {
-		var [form, input] = createForm();
+		var elements = createForm();
+		var form = elements[0];
+		var input = elements[1];
+
 		form.action = "/timeLapse/export/exportCanvas";
 		input.name = "imageData";
 		input.value = canvasData;
@@ -155,15 +164,15 @@ function prepareExportImageDialog() {
 	var layer = tlv.layers[tlv.currentLayer];
 	var metadata = layer.metadata;
 
-	$("#exportImageDateInput").val(layer.metadata.acquisitionDate);
-	$("#exportImageDescriptionInput").val(layer.metadata.countryCode);
-	$("#exportImageFooterSecurityClassificationInput").val(metadata.securityClassification);
-	$("#exportImageHeaderSecurityClassificationInput").val(metadata.securityClassification);
+	$("#exportImageDateInput").val(layer.metadata.acquisitionDate || "N/A");
+	$("#exportImageDescriptionInput").val(layer.metadata.countryCode || "N/A");
+	$("#exportImageFooterSecurityClassificationInput").val(metadata.securityClassification || "N/A");
+	$("#exportImageHeaderSecurityClassificationInput").val(metadata.securityClassification || "N/A");
 
 	var coordinateConversion = new CoordinateConversion();
-	var [longitude, latitude] = tlv.map.getView().getCenter();
-	var dms = coordinateConversion.ddToDms(latitude, "lat") + " " + coordinateConversion.ddToDms(longitude, "lon");	
-	var mgrs = coordinateConversion.ddToMgrs(latitude, longitude);
+	var center = tlv.map.getView().getCenter();
+	var dms = coordinateConversion.ddToDms(center[1], "lat") + " " + coordinateConversion.ddToDms(center[0], "lon");	
+	var mgrs = coordinateConversion.ddToMgrs(center[1], center[0]);
 	$("#exportImageLocationInput").val("DMS: " + dms + " MGRS: " + mgrs);
 
 	$("#exportImageTitleInput").val(layer.imageId);
