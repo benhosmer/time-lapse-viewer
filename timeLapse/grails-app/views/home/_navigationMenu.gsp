@@ -6,7 +6,7 @@
 				<g:render template = "menus/searchMenu"/>
 				<g:render template = "menus/timeLapseMenuControls"/>
 				<li>
-					<a href = javascript:void(0) title = "Summary Table">
+					<a href = javascript:void(0) onclick = buildSummaryTable();$("#summaryTableDialog").modal("show"); title = "Summary Table">
 						<span id = "tlvLayerCountSpan">0/0</span>
 						<span class = "glyphicon glyphicon-list-alt"></span>
 					</a>

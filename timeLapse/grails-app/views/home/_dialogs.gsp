@@ -13,6 +13,7 @@
 	</div>
 </div>
 
+<g:render template = "timeLapseDialogs"/>
 <g:render template = "menus/exportMenuDialogs"/>
 <g:render template = "menus/imagePropertiesMenuDialogs"/>
 <g:render template = "menus/searchMenuDialogs"/>

@@ -39,6 +39,38 @@ function addLayersToTheMap() {
 	);
 }
 
+function buildSummaryTable() {
+	var table = $("#timeLapseSummaryTable")[0];
+	
+	for (var i = table.rows.length - 1; i >= 0; i--) { table.rows[i].delete(); }
+
+	var row = table.insertRow(0);
+	var cell = row.insertCell(row.cells.length);
+	$.each(
+		tlv.layers[0].metadata,
+		function(key, value) {
+			var cell = row.insertCell(row.cells.length);
+			$(cell).append(key.capitalize().replace(/([A-Z])/g, " $1"));
+		}
+	);
+
+	$.each(
+		tlv.layers,
+		function(i, x) {
+			row = table.insertRow(table.rows.length);
+			cell = row.insertCell(row.cells.length);
+			$(cell).append(i + 1);
+			$.each(
+				x.metadata,
+				function(key, value) {
+					cell = row.insertCell(row.cells.length);
+					$(cell).append(value);
+				}
+			);
+		}
+	);
+}
+
 function changeFrame(param) {
 	tlv.layers[tlv.currentLayer].mapLayer.setVisible(false);
 
@@ -61,7 +93,7 @@ function deleteFrame() {
 	var nextFrameIndex = getNextFrameIndex();
 	var spliceIndex = nextFrameIndex == 0 ? 0 : nextFrameIndex;
 	tlv.layers.splice(spliceIndex, 1);
-	tlv.currentLayer = tlv.currentLayer > tlv.layers.length - 1 && tlv.layers.length - 1; 
+	if (tlv.currentLayer > tlv.layers.length - 1) { tlv.currentLayer = tlv.layers.length - 1; } 
 
 	changeFrame("fastForward");
 }
@@ -175,6 +207,8 @@ function setupTimeLapse() {
 	// cycle through the layers to begin their chip downloads
 	tlv.currentLayer = 0;
 	for (var i = 0; i < tlv.layers.length; i++) { changeFrame("fastForward"); }
+
+	enableMenuButtons();
 }
 
 function stopTimeLapse() { clearTimeout(tlv.timeLapseAdvance); }
