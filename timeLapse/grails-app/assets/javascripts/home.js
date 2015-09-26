@@ -56,13 +56,16 @@ function enableKeyboardShortcuts() {
 	$(document).on(
 		"keydown", 
 		function(event) {
-			var keyCode = event.keyCode;
+			// only if a modal is not open
+			if (!$(".modal-backdrop").is(":visible")) {
+				var keyCode = event.keyCode;
 			
-			switch(keyCode) {
-				// left arrow key
-				case 37: changeFrame("rewind"); break; 
-				// right arrow key
-				case 39: changeFrame("fastForward"); break;
+				switch(keyCode) {
+					// left arrow key
+					case 37: changeFrame("rewind"); break; 
+					// right arrow key
+					case 39: changeFrame("fastForward"); break;
+				}
 			}
 		}
 	);
