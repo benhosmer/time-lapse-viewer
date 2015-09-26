@@ -8,5 +8,6 @@
 			<span>Enable Rotation</span>
 		</a></li>
 		<li><a href = javascript:void(0) onclick = $("#geoJumpDialog").modal("show")>Geo-Jump</a></li>
+		<li><a href = javascript:void(0) onclick = tlv.layers.reverse();changeFrame("rewind");changeFrame("fastForward")>Reverse Order</a></li>
 	</ul>
 </li>
