@@ -197,6 +197,8 @@ function setupTimeLapse() {
 	tlv.map.addInteraction(tlv.mapInteractions.altDragRotate);
 	tlv.map.addInteraction(tlv.mapInteractions.dragPan);
 
+	if (tlv.reverseChronological == "true") { tlv.layers.reverse(); }
+
 	addLayersToTheMap();
 
 	tlv.map.getView().fit(tlv.bbox, tlv.map.getSize());
