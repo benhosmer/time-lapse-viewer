@@ -69,7 +69,6 @@ class SearchLibraryService {
 			filter += "(${sensorFilters.join(" OR ")})"
 		}		
 
-println filter
 
 		queryUrl += "?filter=" + URLEncoder.encode(filter)
  
@@ -78,7 +77,7 @@ println filter
 		queryUrl += "&service=WFS"
 		queryUrl += "&typeName=omar:raster_entry"
 		queryUrl += "&version=1.0.0"
-println queryUrl
+
 		def xml = httpDownloadService.serviceMethod([url: queryUrl])
 		
 		def imageArray = []
