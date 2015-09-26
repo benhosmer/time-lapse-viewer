@@ -140,6 +140,7 @@ function getExportImageParams() {
 		headerSecurityClassification: $("#exportImageHeaderSecurityClassificationInput").val(),
 		location: $("#exportImageLocationInput").val(),
 		logo: $("#exportImageLogoSelect").val(),
+		northAngle: tlv.map.getView().getRotation(),
 		title: $("#exportImageTitleInput").val()
 	};
 	

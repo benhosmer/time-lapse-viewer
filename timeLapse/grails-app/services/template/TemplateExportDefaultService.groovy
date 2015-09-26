@@ -57,7 +57,7 @@ class TemplateExportDefaultService {
 		def northArrowSize = logoHeight as Integer
 		def northArrowImage = imageScalingService.serviceMethod([
 			height: northArrowSize,
-			image: northArrowService.serviceMethod()
+			image: northArrowService.serviceMethod([ angle: params.northAngle ])
 		])
 		def northArrowOffsetX = imageWidth - logoOffsetX - northArrowSize as Integer
 		def northArrowOffsetY = logoOffsetY as Integer

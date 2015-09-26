@@ -11,11 +11,15 @@ import java.awt.RenderingHints
 class NorthArrowService {
 
 	def serviceMethod(params) {
+		def angle = params.angle as Double
 
 		def size = 1000
 		def strokeWidth = 50
 		def image = new BufferedImage(size, size, BufferedImage.TYPE_4BYTE_ABGR)
 		def graphic = image.createGraphics()
+
+		// apply rotation
+		graphic.rotate(angle, size / 2, size / 2)
 
 		// apply rendering hints
 		def antialiasing = RenderingHints.KEY_ANTIALIASING
