@@ -7,6 +7,8 @@ import javax.imageio.ImageIO
 
 @Transactional
 class ExportService {
+	def logService
+
 
 	def canvasToImage(params) {
 		def imageData = params.imageData
@@ -29,6 +31,21 @@ class ExportService {
 	
 
 		return stringBuffer
+	}
+
+	def saveLink(params, request) {
+		def date = new Date()
+		def identifier = date.format("yyyyMMddHHmmssSSS")
+		new LinkExport(
+			browserInfo: logService.getBrowserInfo(request),
+			date: date,
+			identifier: identifier,
+			ipAddress: logService.getIpAddress(request),
+			tlvInfo: params.tlvInfo
+		).save()
+
+	
+		return identifier
 	}
 
 	def serviceMethod() {}

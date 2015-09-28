@@ -29,7 +29,7 @@ function addLayersToTheMap() {
 					ratio: 1,
 					url: "/timeLapse/home/wms"
 				}),
-				visible: false
+				visible: i == 0 ? true : false
 			});
 
 			x.mapLayer = image;
@@ -135,6 +135,11 @@ var pageLoadTimeLapse = pageLoad;
 pageLoad = function() {
 	pageLoadTimeLapse();
 	setupMap();
+	
+	if (tlv.layers) {
+		$("#searchDialog").modal("hide");
+		setupTimeLapse();
+	}
 }
 
 function playStopTimeLapse(button) { 
@@ -198,7 +203,6 @@ function setupTimeLapse() {
 	tlv.map.addInteraction(tlv.mapInteractions.dragPan);
 
 	if (tlv.reverseChronological == "true") { tlv.layers.reverse(); }
-
 	addLayersToTheMap();
 
 	tlv.map.getView().fit(tlv.bbox, tlv.map.getSize());
@@ -206,9 +210,7 @@ function setupTimeLapse() {
 	// register map listeners
 	tlv.map.on("moveend", theMapHasMoved);
 
-	// cycle through the layers to begin their chip downloads
 	tlv.currentLayer = 0;
-	for (var i = 0; i < tlv.layers.length; i++) { changeFrame("fastForward"); }
 
 	enableMenuButtons();
 }

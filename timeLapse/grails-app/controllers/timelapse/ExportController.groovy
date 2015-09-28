@@ -19,6 +19,13 @@ class ExportController {
 		ImageIO.write(image, "png", response.outputStream)
 	}
 
+	def exportLink() {
+		def identifier = exportService.saveLink(params, request)
+
+		
+		render identifier
+	}
+
 	def exportMetadata() {
 		def metadataLayers = new JsonSlurper().parseText(params.metadata)
 		def csv = exportService.convertMetadataToCsv(metadataLayers)

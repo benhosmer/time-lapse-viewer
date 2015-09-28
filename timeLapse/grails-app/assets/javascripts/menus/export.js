@@ -97,6 +97,32 @@ function exportImage() {
 	checkProxyMapLoadStatus(exportCanvas);
 }
 
+function exportLink() {
+	var tlvInfo = {
+		bbox: tlv.map.getView().calculateExtent(tlv.map.getSize()),
+		layers: []
+	};
+	$.each(
+		tlv.layers,
+		function(i, x) {
+			var attributes = getImageProperties(i);
+			attributes.metadata = x.metadata;
+			tlvInfo.layers.push(attributes);
+		}
+	);
+
+	$.ajax({
+		data: "tlvInfo=" + JSON.stringify(tlvInfo),
+		dataType: "text",
+		failure: function() { alert("Uh oh, something went wrong when trying to export your link!"); },
+		success: function(data) {
+			$("#exportLinkHref").attr("href", location.origin + "/timeLapse/home?tlv=" + data);
+        		$("#exportLinkDialog").modal("show");
+		},
+		url: "/timeLapse/export/exportLink"
+	});
+}
+
 function exportMetadata() {
 	var metadataLayers = [];
 	$.each(tlv.layers, function(i, x) { metadataLayers.push(x.metadata); });
@@ -146,6 +172,29 @@ function getExportImageParams() {
 	
 
 	return params;
+}
+
+function getImageProperties(layerIndex) {
+	var params = tlv.layers[layerIndex].mapLayer.getSource().getParams();
+	var properties = {
+		bands: params.BANDS,
+		brightness: params.BRIGHTNESS,
+		contrast: params.CONTRAST,
+		dra: params.DRA,
+		draArea: params.DRA_AREA,
+		draSigma: params.DRA_SIGMA,
+		imageId: params.IMAGE_ID,
+		interpolation: params.INTEPOLATION,
+		indexId: params.LAYERS,
+		library: params.LIBRARY,
+		offsetLat: params.OFFSET_LAT,
+		offsetLon: params.OFFSET_LON,
+		rotate: params.ROTATE,
+		sharpness: params.SHARPNESS
+	};
+
+
+	return properties;
 }
 
 function getProxyMapCanvasData(callbackFunction) {

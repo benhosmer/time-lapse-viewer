@@ -9,6 +9,10 @@
 //= require prototype.js
 //= require pageLoad.js
 //= require home.js
+//= require menus/search.js
 //= require timeLapse.js
-//= require_tree menus
+//= require menus/export.js
+//= require menus/imageProperties.js
+//= require menus/layers.js
+//= require menus/view.js
 //= require searchPlugin.js
