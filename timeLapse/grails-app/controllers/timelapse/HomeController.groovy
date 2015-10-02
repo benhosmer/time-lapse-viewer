@@ -8,6 +8,7 @@ import javax.imageio.ImageIO
 
 class HomeController {
 	def imageProxyService
+	def openSearchService
 	def restApiService
 	def searchLibraryService
 	def wmsConversionService
@@ -19,6 +20,8 @@ class HomeController {
 	
 		render(view: "index.gsp", model: [tlvParams : JsonOutput.toJson(model)])
 	}
+
+	def openSearch() { render openSearchService.serviceMethod() }
 
 	def proxyImage() {
 		def image = imageProxyService.serviceMethod(params)

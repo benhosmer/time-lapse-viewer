@@ -7,7 +7,7 @@
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 		<title>Time Lapse Viewer (TLV)</title>
-		
+		<link href = "${createLink(action: "openSearch", controller: "home")}" rel = "search" title = "Time-Lapse Viewer" type = "application/opensearchdescription+xml"/>		
     		<asset:stylesheet src = "indexBundle.css"/>
 		<asset:script>var tlv = ${raw(tlvParams)};</asset:script>
     		<asset:javascript src = "indexBundle.js"/>
@@ -15,11 +15,8 @@
 	<body>
 		<div class = "container-fluid">
 			<g:render template = "../securityClassificationHeader"/>
-
 			<g:render template = "navigationMenu"/>				
-					
 			<g:render template = "timeLapse"/>  
-
 			<g:render template = "dialogs"/>
 		</div> 
 
