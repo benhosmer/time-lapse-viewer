@@ -1,6 +1,10 @@
 <nav class = "navbar navbar-default navbar-inverse navbar-static-top">
 	<div class = "container-fluid">
-		<div class = "navbar-header"><a class = "navbar-brand" href = "/timeLapse/home">TLV</a></div>
+		<div class = "navbar-header">
+			<a class = "navbar-brand" href = "/timeLapse/home" style = "padding-top: 5px">
+				<asset:image height = "40px" src = "logos/tlv.png"/>
+			</a>
+		</div>
 		<div class = "collapse navbar-collapse">
 			<ul class = "nav navbar-nav">
 				<g:render template = "menus/searchMenu"/>
