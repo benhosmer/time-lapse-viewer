@@ -63,44 +63,44 @@ class TemplateExportDefaultService {
 		def northArrowOffsetY = logoOffsetY as Integer
 		graphic.drawImage(northArrowImage, northArrowOffsetX, northArrowOffsetY, null)
 
-		// header security classification
-		def headerSecurityClassificationHeight = 0.25 * logoHeight as Integer
-		def headerSecurityClassificationWidth = imageWidth - logoOffsetX - logoWidth - logoOffsetX - logoOffsetX - northArrowSize - logoOffsetX as Integer
-		def headerSecurityClassificationImage = textGeneratorService.serviceMethod([
+		// line 1
+		def line1Height = 0.25 * logoHeight as Integer
+		def line1Width = imageWidth - logoOffsetX - logoWidth - logoOffsetX - logoOffsetX - northArrowSize - logoOffsetX as Integer
+		def line1Image = textGeneratorService.serviceMethod([
 			color: "FFFFFF",
-			height: headerSecurityClassificationHeight,
-			text: params.headerSecurityClassification,
-			width: headerSecurityClassificationWidth
+			height: line1Height,
+			text: params.line1Text,
+			width: line1Width
 		])
-		def headerSecurityClassificationOffsetX = logoOffsetX + logoWidth + logoOffsetX as Integer
-		def headerSecurityClassificationOffsetY = logoOffsetY as Integer
-		graphic.drawImage(headerSecurityClassificationImage, headerSecurityClassificationOffsetX, headerSecurityClassificationOffsetY, null)
+		def line1OffsetX = logoOffsetX + logoWidth + logoOffsetX as Integer
+		def line1OffsetY = logoOffsetY as Integer
+		graphic.drawImage(line1Image, line1OffsetX, line1OffsetY, null)
 
-		// title
-		def titleHeight = 0.43 * logoHeight as Integer
-		def titleWidth = headerSecurityClassificationWidth as Integer
-		def titleImage = textGeneratorService.serviceMethod([
+		// line 2
+		def line2Height = 0.43 * logoHeight as Integer
+		def line2Width = line1Width as Integer
+		def line2Image = textGeneratorService.serviceMethod([
 			color: "FFFFFF",
-			height: titleHeight,
-			text: params.title,
-			width: titleWidth
+			height: line2Height,
+			text: params.line2Text,
+			width: line2Width
 		])
-		def titleOffsetX = headerSecurityClassificationOffsetX as Integer
-		def titleOffsetY = headerSecurityClassificationOffsetY + headerSecurityClassificationHeight as Integer
-		graphic.drawImage(titleImage, titleOffsetX, titleOffsetY, null)
+		def line2OffsetX = line1OffsetX as Integer
+		def line2OffsetY = line1OffsetY + line1Height as Integer
+		graphic.drawImage(line2Image, line2OffsetX, line2OffsetY, null)
 
-		// description
-		def descriptionHeight = 0.25 * logoHeight as Integer	
-		def descriptionWidth = titleWidth as Integer
-		def descriptionImage = textGeneratorService.serviceMethod([
+		// line 3
+		def line3Height = 0.25 * logoHeight as Integer	
+		def line3Width = line2Width as Integer
+		def line3Image = textGeneratorService.serviceMethod([
 			color: "FFFFFF",
-			height: descriptionHeight,
-			text: params.description,
-			width: descriptionWidth
+			height: line3Height,
+			text: params.line3Text,
+			width: line3Width
 		])
-		def descriptionOffsetX = titleOffsetX as Integer
-		def descriptionOffsetY = titleOffsetY + titleHeight as Integer
-		graphic.drawImage(descriptionImage, descriptionOffsetX, descriptionOffsetY, null)
+		def line3OffsetX = line2OffsetX as Integer
+		def line3OffsetY = line2OffsetY + line2Height as Integer
+		graphic.drawImage(line3Image, line3OffsetX, line3OffsetY, null)
 
 		// image
 		def imageOffsetX = 0
@@ -118,46 +118,46 @@ class TemplateExportDefaultService {
 		def footerOffsetY = headerHeight + imageHeight as Integer
 		graphic.drawImage(footerImage, footerOffsetX, footerOffsetY, null)
 
-		// footer security classification
-		def footerSecurityClassificationHeight = footerHeight as Integer
-		def footerSecurityClassificationWidth = footerWidth / 3 as Integer
-		def footerSecurityClassificationImage = textGeneratorService.serviceMethod([
+		// line 4
+		def line4Height = footerHeight as Integer
+		def line4Width = footerWidth / 3 as Integer
+		def line4Image = textGeneratorService.serviceMethod([
 			color: "FFFFFF",
-			height: footerSecurityClassificationHeight,
-			text: params.footerSecurityClassification,
-			width: footerSecurityClassificationWidth
+			height: line4Height,
+			text: params.line4Text,
+			width: line4Width
 		])
-		def footerSecurityClassificationOffsetX = 0
-		def footerSecurityClassificationOffsetY = imageOffsetY + imageHeight as Integer
-		graphic.drawImage(footerSecurityClassificationImage, footerSecurityClassificationOffsetX, footerSecurityClassificationOffsetY, null)
+		def line4OffsetX = 0
+		def line4OffsetY = imageOffsetY + imageHeight as Integer
+		graphic.drawImage(line4Image, line4OffsetX, line4OffsetY, null)
 
-		// location
-		def locationHeight = footerHeight as Integer
-		def locationWidth = footerSecurityClassificationWidth as Integer
-		def locationImage = textGeneratorService.serviceMethod([
+		// line 5
+		def line5Height = footerHeight as Integer
+		def line5Width = line4Width as Integer
+		def line5Image = textGeneratorService.serviceMethod([
 			alignment: "center",
 			color: "FFFFFF",
-			height: locationHeight,
-			text: params.location,
-			width: locationWidth
+			height: line5Height,
+			text: params.line5Text,
+			width: line5Width
 		])
-		def locationOffsetX = footerSecurityClassificationOffsetX + footerSecurityClassificationWidth as Integer
-		def locationOffsetY = footerSecurityClassificationOffsetY as Integer
-		graphic.drawImage(locationImage, locationOffsetX, locationOffsetY, null)
+		def line5OffsetX = line4OffsetX + line4Width as Integer
+		def line5OffsetY = line4OffsetY as Integer
+		graphic.drawImage(line5Image, line5OffsetX, line5OffsetY, null)
 
-		// date
-		def dateHeight = footerHeight as Integer
-		def dateWidth = locationWidth as Integer
-		def dateImage = textGeneratorService.serviceMethod([
+		// line 6
+		def line6Height = footerHeight as Integer
+		def line6Width = line5Width as Integer
+		def line6Image = textGeneratorService.serviceMethod([
 			alignment: "right",
 			color: "FFFFFF",
-			height: dateHeight,
-			text: params.date,
-			width: dateWidth
+			height: line6Height,
+			text: params.line6Text,
+			width: line6Width
 		])
-		def dateOffsetX = locationOffsetX + locationWidth as Integer
-		def dateOffsetY = locationOffsetY as Integer
-		graphic.drawImage(dateImage, dateOffsetX, dateOffsetY, null)
+		def line6OffsetX = line5OffsetX + line5Width as Integer
+		def line6OffsetY = line5OffsetY as Integer
+		graphic.drawImage(line6Image, line6OffsetX, line6OffsetY, null)
 
 		// disclaimer
 		def disclaimerHeight = templateHeight - headerHeight - imageHeight - footerHeight as Integer

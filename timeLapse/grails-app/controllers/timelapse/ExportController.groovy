@@ -6,6 +6,7 @@ import javax.imageio.ImageIO
 
 
 class ExportController {
+	def animationExportService
 	def exportService
 	def restApiService
 
@@ -17,6 +18,24 @@ class ExportController {
 
 		response.contentType = "image/png"
 		ImageIO.write(image, "png", response.outputStream)
+		response.outputStream.flush()
+	}
+
+	def exportGif() {
+		def requestMap = restApiService.normalizeRequestParams(params, request)
+		def json = new JsonSlurper().parseText(requestMap.frames)
+		def gifFile = animationExportService.exportGif(json)
+		
+		
+		if (gifFile.exists()) {
+			def gifBytes = gifFile.getBytes()
+			gifFile.delete()
+
+			response.contentType = "image/gif"
+			response.outputStream << gifBytes
+			response.outputStream.flush()
+		}
+		else { render "There was a problem making your GIF" }
 	}
 
 	def exportLink() {
@@ -34,5 +53,22 @@ class ExportController {
 		response.contentType = "text/csv"
 		response.setHeader("Content-disposition", "attachment;filename=${new Date().format("yyyyMMddHHmmssSSS")}metadata.csv")
 		response.outputStream << csv.bytes
+	}
+
+	def exportPdf() {
+		def requestMap = restApiService.normalizeRequestParams(params, request)
+		def json = new JsonSlurper().parseText(requestMap.frames)
+		def pdfFile = animationExportService.exportPdf(json)
+
+		
+		if (pdfFile.exists()) {
+			def pdfBytes = pdfFile.getBytes()
+			pdfFile.delete()
+
+			response.contentType = "application/pdf"
+			response.outputStream << pdfBytes
+			response.outputStream.flush()
+		}
+		else { render "There was a problem making your PDF" }
 	}
 }

@@ -1,7 +1,7 @@
 <div class = "modal" id = "loadingDialog">
 	<div class = "modal-dialog">
 		<div class = "modal-content">
-			<div class = "modal-header"><h4>Please wait...</h4></div>"
+			<div class = "modal-header"><h4>Please wait...</h4></div>
 			<div class = "modal-body">
 				<div id = "loadingDialogMessageDiv"></div>
 				<br>
