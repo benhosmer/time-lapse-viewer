@@ -13,7 +13,7 @@ class GradientGeneratorService {
 	def serviceMethod(params) {
 		def bottomColor = params.bottomColor ? Color.decode("#${params.bottomColor}") : Color.BLACK
 		def height = params.height ? params.height as Integer : 1
-		def topColor = params.topColor ? Color.decode("#${params.topColor}") : Color.GRAY
+		def topColor = params.topColor ? Color.decode("#${params.topColor}") : Color.DARK_GRAY
 		def width = params.width as Integer
 
 		// create a blank buffered image
