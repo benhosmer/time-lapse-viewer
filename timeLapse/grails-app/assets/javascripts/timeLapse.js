@@ -82,9 +82,7 @@ function changeFrame(param) {
 
 	tlv.map.renderSync();
 
-	updateImageId();
-	updateAcquisitionDate();
-	updateTlvLayerCount();
+	updateScreenText();
 }
 
 function deleteFrame() {
@@ -213,6 +211,8 @@ function setupTimeLapse() {
 	tlv.currentLayer = 0;
 
 	enableMenuButtons();
+
+	updateScreenText();
 }
 
 function stopTimeLapse() { clearTimeout(tlv.timeLapseAdvance); }
@@ -222,6 +222,12 @@ function theMapHasMoved() { /* place holder to be overriden by other functions *
 function updateAcquisitionDate() { $("#acquisitionDateDiv").html(tlv.layers[tlv.currentLayer].metadata.acquisitionDate); }
 
 function updateImageId() { $("#imageIdDiv").html(tlv.layers[tlv.currentLayer].imageId); }
+
+function updateScreenText() {
+	updateImageId();
+	updateAcquisitionDate();
+	updateTlvLayerCount();
+}
 
 function updateTlvLayerCount() {
 	var currentCount = tlv.currentLayer + 1;
