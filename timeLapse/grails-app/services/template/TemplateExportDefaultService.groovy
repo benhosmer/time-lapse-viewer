@@ -67,7 +67,7 @@ class TemplateExportDefaultService {
 		def line1Height = 0.25 * logoHeight as Integer
 		def line1Width = imageWidth - logoOffsetX - logoWidth - logoOffsetX - logoOffsetX - northArrowSize - logoOffsetX as Integer
 		def line1Image = textGeneratorService.serviceMethod([
-			color: "FFFFFF",
+			color: "ADD8E6",
 			height: line1Height,
 			text: params.line1Text,
 			width: line1Width
@@ -80,7 +80,7 @@ class TemplateExportDefaultService {
 		def line2Height = 0.43 * logoHeight as Integer
 		def line2Width = line1Width as Integer
 		def line2Image = textGeneratorService.serviceMethod([
-			color: "FFFFFF",
+			color: "FFFF00",
 			height: line2Height,
 			text: params.line2Text,
 			width: line2Width
@@ -122,7 +122,7 @@ class TemplateExportDefaultService {
 		def line4Height = footerHeight as Integer
 		def line4Width = footerWidth / 3 as Integer
 		def line4Image = textGeneratorService.serviceMethod([
-			color: "FFFFFF",
+			color: "ADD8E6",
 			height: line4Height,
 			text: params.line4Text,
 			width: line4Width
@@ -136,7 +136,7 @@ class TemplateExportDefaultService {
 		def line5Width = line4Width as Integer
 		def line5Image = textGeneratorService.serviceMethod([
 			alignment: "center",
-			color: "FFFFFF",
+			color: "ADD8E6",
 			height: line5Height,
 			text: params.line5Text,
 			width: line5Width
@@ -150,7 +150,7 @@ class TemplateExportDefaultService {
 		def line6Width = line5Width as Integer
 		def line6Image = textGeneratorService.serviceMethod([
 			alignment: "right",
-			color: "FFFFFF",
+			color: "ADD8E6",
 			height: line6Height,
 			text: params.line6Text,
 			width: line6Width
