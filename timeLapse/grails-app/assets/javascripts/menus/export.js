@@ -197,15 +197,18 @@ function exportScreenshot() {
 
 function getExportFrameParams() {
 	var params = {
-		line1Text: $("#exportFrameLine1Input").val(),
-		line2Text: $("#exportFrameLine2Input").val(),
-		line3Text: $("#exportFrameLine3Input").val(),
-		line4Text: $("#exportFrameLine4Input").val(),
-		line5Text: $("#exportFrameLine5Input").val(),
-		line6Text: $("#exportFrameLine6Input").val(),
 		logo: $("#exportFrameLogoSelect").val(),
 		northAngle: tlv.map.getView().getRotation()
 	};
+
+	$.each(
+		[1, 2, 3, 4, 5, 6],
+		function(i, x) {
+			var text = $("#exportFrameLine" + x + "Input").val();
+			if (text == "") { text = " "; }
+			params["line" + x + "Text"] = text;
+		}
+	);
 	
 
 	return params;
