@@ -1,7 +1,5 @@
-function CoordinateConversion()
-{
-	this.ddToDms = function(dd, position)
-	{
+function CoordinateConversion() {
+	this.ddToDms = function(dd, position) {
 		var degreesAbs = Math.abs(dd);
 		var degrees = Math.floor(degreesAbs);
 		
@@ -9,43 +7,26 @@ function CoordinateConversion()
 		var minutes = Math.floor(minutesAbs);
 		
 		var seconds = Math.abs((minutesAbs - minutes) * 60);
-        seconds = seconds.toFixed(2);
+		seconds = seconds.toFixed(2);
 		
-		var dms;
-        if(minutes < 10 && seconds < 10)
-		{
-			dms = degrees + "°0" + minutes + "'0" + seconds + '"';
+		var dms = "";
+		if(degrees < 10) {
+			if (position == "lat") { dms += "0" + degrees; }
+			else if (position == "lon") { dms += "00" + degrees; }
 		}
-		else if (minutes < 10)
-		{
-			dms = degrees + "°0" + minutes + "'" + seconds + '"';
+		else if(degrees < 100) {  
+			if (position == "lon") { dms += "0" + degrees; }
+			else { dms += degrees; }
 		}
-		else if (seconds < 10)
-		{
-			dms = degrees + "°" + minutes + "'0" + seconds + '"';
-		}
-		else
-		{
-			dms = degrees + "°" + minutes + "'" + seconds + '"';
-		}
+		dms = minutes < 10 ? dms + "0" + minutes : dms + minutes;
+		dms = seconds < 10 ? dms + "0" + seconds : dms + seconds;
 		
-		if(position == "lat" && dd > 0)
-		{
-			dms = dms + " N";
-		}
-		else if(position == "lat" && dd < 0)
-		{
-			dms = dms + " S";
-		}
-		else if(position == "lon" && dd > 0)
-		{
-			dms = dms + " E";
-		}
-		else if(position == "lon" && dd < 0)
-		{
-			dms = dms + " W";
-		}
+		if(position == "lat" && dd > 0) { dms += " N"; }
+		else if(position == "lat" && dd < 0) { dms += " S"; }
+		else if(position == "lon" && dd > 0) { dms += " E"; }
+		else if(position == "lon" && dd < 0) { dms += " W"; }
 		
+
 		return dms;
 	};
 	
