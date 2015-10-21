@@ -29,7 +29,6 @@ class ExportController {
 		
 		if (gifFile.exists()) {
 			def gifBytes = gifFile.getBytes()
-			gifFile.delete()
 
 			response.contentType = "image/gif"
 			response.outputStream << gifBytes
@@ -63,7 +62,6 @@ class ExportController {
 		
 		if (pdfFile.exists()) {
 			def pdfBytes = pdfFile.getBytes()
-			pdfFile.delete()
 
 			response.contentType = "application/pdf"
 			response.outputStream << pdfBytes

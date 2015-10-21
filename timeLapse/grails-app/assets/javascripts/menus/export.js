@@ -70,14 +70,15 @@ function exportFrames() {
 		tlv.exportAnimationFrames,
 		function(i, x) {
 			if (!x.imageData) {
+				displayLoadingDialog("We're taking a snapshot of the map... this may take a sec.");
 				changeFrame(i);
 				prepareExportFrameParams();
 				setupProxyMap();
 
 				var exportCanvas = function(canvasData) { 
-					tlv.exportAnimationFrames[tlv.currentLayer] = $.extend(getExportFrameParams(), { imageData: canvasData }); 
-					exportFrames();
+					tlv.exportAnimationFrames[tlv.currentLayer] = $.extend(getExportFrameParams(), { imageData: canvasData });  
 					hideLoadingDialog();
+					exportFrames();
 				}
 				checkProxyMapLoadStatus(exportCanvas);
 
@@ -101,6 +102,7 @@ function exportFrames() {
 }
 
 function exportImage() {
+	displayLoadingDialog("We're taking a snapshot of the map... this may take a sec.");
 	setupProxyMap();
 	
 	var exportParams = getExportFrameParams();
@@ -176,7 +178,8 @@ function exportMetadata() {
 	form.remove();
 }
 
-function exportScreenshot() {		
+function exportScreenshot() {	
+	displayLoadingDialog("We're taking a snapshot of the map... this may take a sec.");	
 	setupProxyMap();
 
 	var exportCanvas = function(canvasData) {
@@ -315,8 +318,6 @@ function prepareImageExport() {
 }
 
 function setupProxyMap() {
-	displayLoadingDialog("We're taking a snapshot of the map... this may take a sec.");
-
 	var proxyMap = $("#proxyMap");
 	proxyMap.show();
 

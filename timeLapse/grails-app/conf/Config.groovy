@@ -160,3 +160,4 @@ libraries {
 }
 
 securityClassification = "UNCLASSIFIED // FOUO"
+tempFilesDirectory = "${System.getProperty("java.io.tmpdir")}"
