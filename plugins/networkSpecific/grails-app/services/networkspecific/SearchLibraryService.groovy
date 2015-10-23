@@ -13,12 +13,14 @@ class SearchLibraryService {
 
 	def extractMetadata(imageXml) {
 		def metadata = [
-			acquisitionDate: imageXml.acquisitionDate?.text() ?: null,
+			acquisitionDate: imageXml.acquisition_date?.text() ?: null,
 			azimuthAngle: imageXml.azimuth_angle?.text() as Double ?: null,
 			countryCode: imageXml.country_code?.text() ?: null,
 			filename: imageXml.filename.text() ?: null,
+			imageId: imageXml.image_id?.text() ?: null,
 			indexId: imageXml.index_id?.text() ?: null,
-			numberOfBands: imageXml.number_of_bands?.text() as Integer ?: null
+			numberOfBands: imageXml.number_of_bands?.text() as Integer ?: null,
+			title: imageXml.title?.text() ?: null
 		]
 
 
@@ -87,7 +89,7 @@ class SearchLibraryService {
 				
 				def image = [:]
 				image.indexId = metadata.indexId
-				image.imageId = metadata.imageId ?: metadata.filename
+				image.imageId = metadata.imageId ?: (metadata.title ?: metadata.filename)
 				image.library = "omar"
 				image.metadata = metadata
 				imageArray.push(image)
