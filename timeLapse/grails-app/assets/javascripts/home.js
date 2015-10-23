@@ -1,7 +1,7 @@
 function convertGeospatialCoordinateFormat(inputString) {
-	var ddPattern = /(\-?\d{1,2}[.]?\d*)\s*[,]?\s*(\-?\d{1,3}[.]?\d*)/;
+	var ddPattern = /(\-?\d{1,2}[.]?\d*)[\s+|,?]\s*(\-?\d{1,3}[.]?\d*)/;
 	var dmsPattern = /(\d{2})[^\d]*(\d{2})[^\d]*(\d{2}[.]?\d*)([n|N|s|S])[^\w]*(\d{3})[^\d]*(\d{2})[^d]*(\d{2}[.]?\d*)([e|E|w|W])/;
-	var mgrsPattern = /([A-Z][A-Z]\d{1})[^\w]*(\d{2})[^\w]*(\d{5})[^\w]*(\d{5})/;
+	var mgrsPattern = /(\d{1,2})([a-zA-Z])[^\w]*([a-zA-Z])([a-zA-Z])[^\w]*(\d{5})[^\w]*(\d{5})/;
 
 	var coordinateConversion = new CoordinateConversion();
 
@@ -20,7 +20,7 @@ function convertGeospatialCoordinateFormat(inputString) {
 		return [longitude, latitude];
 	}
 	else if (inputString.match(mgrsPattern)) {
-		var location = coordinateConversion.mgrsToDd(RegExp.$1)
+		var location = coordinateConversion.mgrsToDd(RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6);
 
 
 		return convertGeospatialCoordinateFormat(location);
@@ -65,6 +65,8 @@ function enableKeyboardShortcuts() {
 					case 37: changeFrame("rewind"); break; 
 					// right arrow key
 					case 39: changeFrame("fastForward"); break;
+					// delete key
+					case 46: deleteFrame(); break;
 				}
 			}
 		}
