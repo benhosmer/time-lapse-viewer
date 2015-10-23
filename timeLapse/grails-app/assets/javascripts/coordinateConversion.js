@@ -18,6 +18,7 @@ function CoordinateConversion() {
 			if (position == "lon") { dms += "0" + degrees; }
 			else { dms += degrees; }
 		}
+		else { dms += degrees; }
 		dms = minutes < 10 ? dms + "0" + minutes : dms + minutes;
 		dms = seconds < 10 ? dms + "0" + seconds : dms + seconds;
 		
@@ -28,96 +29,65 @@ function CoordinateConversion() {
 		
 
 		return dms;
-	};
+	};	
 	
-	this.dmsToDd = function(degrees, minutes, seconds, position)
-	{
-		var dd = Math.abs(degrees) + Math.abs(minutes / 60) + Math.abs(seconds / 3600);
+	this.dmsToDd = function(deg, min, sec, ori) {
+		var dd = Math.abs(deg) + Math.abs(min / 60) + Math.abs(sec / 3600);
 		
-		if (position == "S" || position == "s" || position == "W" || position == "w")
-		{
-			dd = -dd;
-		}
-		
+		if(ori == "S" || ori == "s" || ori == "W" || ori == "w") { dd = -dd; }
+	
+	
 		return dd;
 	};
 	
-	// degrees to radians
-	this.degToRad = function(degrees)
-	{
-		return (degrees * (Math.PI / 180));
-	};
+	this.ddToMgrs = function(lat, lon) {
+		var K0 = 0.9996;
+		var A1 = 6378137.0 * K0;
+		var B1 = 6356752.3142 * K0;
+		K0 = 0;
+		var N0 = 0;
+		var E0 = 500000;
+		
+		var N1 = (A1 - B1) / (A1 + B1);
+		var N2 = N1 * N1;
+		var N3 = N2 * N1;
+		var E2 = ((A1 * A1) - (B1 * B1)) / (A1 * A1); // e^2
 
-	// radians to degrees
-	this.radToDeg = function(radians)
-	{
-		return (radians * (180 / Math.PI));
-	};
-
-
-
-
-
-
-
-    // Decimal Degrees to Military Grid Reference System
-    this.ddToMgrs = function(lat, lon)
-    {
-        var K0 = 0.9996; // scale factor
-        var A1 = 6378137.0 * K0;
-        var B1 = 6356752.3142 * K0;
-        K0 = 0;
-        var N0 = 0;
-        var E0 = 500000;
-
-        var N1 = (A1 - B1) / (A1 + B1); // n
-        var N2 = N1 * N1;
-        var N3 = N2 * N1;
-        var E2 = ((A1 * A1) - (B1 * B1)) / (A1 * A1); // e^2
-
-        var latRad = lat * (Math.PI / 180.0);
-        var lonRad = lon * (Math.PI / 180.0);
-
-        var latRadSin = Math.sin(latRad);
-
-        var latRadCos = Math.cos(latRad);
-        var latRadCos2 = latRadCos * latRadCos;
-        var latRadCos3 = latRadCos2 * latRadCos;
-
-        var latRadTan = latRadSin / latRadCos;
-        var latRadTan2 = latRadTan * latRadTan;
+		var latRad = lat * (Math.PI / 180.0);
+		var lonRad = lon * (Math.PI / 180.0);
+		
+		var latRadSin = Math.sin(latRad);
+		var latRadCos = Math.cos(latRad);
+		var latRadCos2 = latRadCos * latRadCos;
+		var latRadCos3 = latRadCos2 * latRadCos;
+		
+		var latRadTan = latRadSin / latRadCos;
+		var latRadTan2 = latRadTan * latRadTan;
 
         var K3 = latRad - K0;
         var K4 = latRad + K0;
 
         var Merid = Math.floor((lon) / 6) * 6 + 3;
-        if ((lat >= 72) && (lon >= 0))
-        {
-            if (lon < 9)
-            {
+        if ((lat >= 72) && (lon >= 0)) {
+            if (lon < 9) {
                 Merid=3;
             }
 
-            else if (lon<21)
-            {
+            else if (lon<21) {
                 Merid=15;
             }
 
-            else if (lon<33)
-            {
+            else if (lon<33) {
                 Merid=27;
             }
 
-            else if (lon<42)
-            {
+            else if (lon<42) {
                 Merid=39;
             }
         }
 
-        if((lat >= 56) && (lat < 64))
-        {
-            if ((lon >= 3) && (lon < 12))
-            {
+        if((lat >= 56) && (lat < 64)) {
+            if ((lon >= 3) && (lon < 12)) {
                 Merid=9;
             }
         }
@@ -236,34 +206,14 @@ function CoordinateConversion() {
         return(GR);
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	this.mgrsToUtm = function(mgrs)
-    {
-
-      var mgrsRegExp = /^(\d{1,2})\s?([C-X])\s?([A-Z])\s?([A-Z])\s?(\d{0,5})\s?(\d{0,5})\s?/
-
-        if (mgrs.match(mgrsRegExp))
-        {
-            var zone = RegExp.$1;
-            var zdl = RegExp.$2;
-            var c1 = RegExp.$3;
-            var c2 = RegExp.$4;
-            var E = RegExp.$5;
-            var N = RegExp.$6;
+	this.mgrsToDd = function(one, two, three, four, five, six)
+    {    
+            var zone = one;
+            var zdl = two;
+            var c1 = three;
+            var c2 = four;
+            var E = five;
+            var N = six;
 
             var u={};
             var ok=MGRStoUTM(zone,zdl,c1,c2,E,N,u);
@@ -288,7 +238,6 @@ function CoordinateConversion() {
             latlon = new Array(2);
             var x, y, southhemi;
 
-
             x = u.E;
 
             y = u.N;
@@ -300,19 +249,22 @@ function CoordinateConversion() {
                 return false;
             }
 
-            var mgrsRegExp = /^(\d{1,2})([a-zA-Z])([a-zA-Z])([a-zA-Z])(\d{10})?/
+            /*var regExp = /^(\d{1,2})([a-zA-Z])([a-zA-Z])([a-zA-Z])(\d{10})?/
 
-            if(($("centerMgrs").value.match(mgrsRegExp)))
+            if($("point").value.match(regExp))
             {
                 var lonZone = parseInt(RegExp.$1, 10);
                 var latZone = RegExp.$2;
                 var easting = RegExp.$3;
                 var northing = RegExp.$4;
                 var remainder = parseInt(RegExp.$5, 10);
-            }
+            }*/
 
-         
-
+            var lonZone = one;
+            var latZone = two;
+            var easting = three;
+            var northing = four;       
+            var remainder = five;
 
             if (latZone == "C" || latZone == "D" || latZone == "E" || latZone == "F" || latZone == "G" || latZone == "H"
                     || latZone == "J" || latZone == "K" || latZone == "L" || latZone == "M")
@@ -330,12 +282,7 @@ function CoordinateConversion() {
             var lon = ( RadToDeg (latlon[0]));
 
             return lon + " " + lat;
-        }
-
-        else
-        {
-            alert("Error: Not a valid MGRS String.");
-        }
+        
     };
 
     var UTMzdlChars="CDEFGHJKLMNPQRSTUVWXX";
