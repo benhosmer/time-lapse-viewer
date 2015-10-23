@@ -172,6 +172,62 @@ function getNextFrameIndex() { return tlv.currentLayer >= tlv.layers.length - 1 
 
 function getPreviousFrameIndex() { return tlv.currentLayer <= 0 ? tlv.layers.length - 1 : tlv.currentLayer - 1; }
 
+function getTimeToAdjacentImage(layerIndex, adjacency) {
+	var layerIndex2 = null;
+	if (adjacency == "previous" && layerIndex > 0) { layerIndex2 = layerIndex - 1; }
+	else if (adjacency == "next" && layerIndex < tlv.layers.length - 1) { layerIndex2 = layerIndex + 1; }
+
+	if (typeof layerIndex2 == "number") { 
+		var date1 = tlv.layers[layerIndex].metadata.acquisitionDate ? new Date(Date.parse(tlv.layers[layerIndex].metadata.acquisitionDate)) : null;
+		var date2 = tlv.layers[layerIndex2].metadata.acquisitionDate ? new Date(Date.parse(tlv.layers[layerIndex2].metadata.acquisitionDate)) : null;
+
+		if (date1 && date2) {
+			var timeDifference = Math.abs(date2 - date1);
+			var seconds = parseInt(timeDifference / 1000);
+
+			var minutes = parseInt(seconds / 60);
+			if (minutes > 0) { seconds -= minutes * 60; }
+
+			var hours = parseInt(minutes / 60);
+			if (hours > 0) { minutes -= hours * 60; }
+
+			var days = parseInt(hours / 24);
+			if (days > 0) { hours -= days * 24; }
+
+			var months = parseInt(days / 30);
+			if (months > 0) { days -= months * 30; }
+			
+			var years = parseInt(months / 12);
+			if (years > 0) { months -= years * 12; }
+
+			
+			if (years > 0) {
+				if (months > 0) { return "~" + years + "yr., " + months + " mon."; }
+				else { return "~" + years + "yr."; }
+			}
+			else if (months > 0) {
+				if (days > 0) { return "~" + months + "mon., " + days + "dy."; }
+				else { return "~" + months + "mon."; }
+			}
+			else if (days > 0) {
+				if (hours > 0) { return "~" + days + "dy., " + hours + "hr."; }
+				else { return "~" + days + "dy."; }
+			}
+			else if (hours > 0) {
+				if (minutes > 0) { return "~" + hours + "hr., " + minutes + "min."; }
+				else { return "~" + hours + "hr."; }
+			}
+			else if (minutes > 0) {
+				if (seconds > 0) { return "~" + minutes + "min., " + seconds + "sec."; }
+				else { return "~" + minutes + "min."; }
+			}
+			else if (seconds > 0) { return "~" + seconds + "sec."; }
+			else { return "0 sec."; }
+		}
+	}
+	else { return false; }
+}
+
 var pageLoadTimeLapse = pageLoad;
 pageLoad = function() {
 	pageLoadTimeLapse();
@@ -263,7 +319,15 @@ function stopTimeLapse() { clearTimeout(tlv.timeLapseAdvance); }
 
 function theMapHasMoved() { /* place holder to be overriden by other functions */ }
 
-function updateAcquisitionDate() { $("#acquisitionDateDiv").html(tlv.layers[tlv.currentLayer].metadata.acquisitionDate); }
+function updateAcquisitionDate() { 
+	var timeToNextImage = getTimeToAdjacentImage(tlv.currentLayer, "next");
+	var timeToPreviousImage = getTimeToAdjacentImage(tlv.currentLayer, "previous");
+	$("#acquisitionDateDiv").html(
+		(timeToPreviousImage ? timeToPreviousImage + " <- " : "") +
+		tlv.layers[tlv.currentLayer].metadata.acquisitionDate +
+		(timeToNextImage ? " -> " + timeToNextImage : "")
+	); 
+}
 
 function updateImageId() { $("#imageIdDiv").html(tlv.layers[tlv.currentLayer].imageId); }
 
