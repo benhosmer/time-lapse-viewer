@@ -21,7 +21,7 @@
 					<tr>
 						<td align = "right">Location:</td>
 						<td>
-							<input id = "searchTabLocationDiv" type = "text" value = "28.12540769577, -80.687456130982">
+							<input id = "searchTabLocationDiv" type = "text" value = "55GEN2119554510">
 							&nbsp;within&nbsp;
 							<select id = "searchTabRadiusSelect">
 								<g:each in = "${[1, 10, 50, 100, 500,1000, 5000, 10000]}">
@@ -52,7 +52,23 @@
 								</g:each>
 							</div>
 						</td>
-        				<tr>
+					</tr>
+					<tr>
+						<td align = "right">Tailored GEOINT:</td>
+						<td>
+							<div class = "btn-group" data-toggle = "buttons">
+								<label class = "btn btn-primary" id = "searchTabTailoredGeointAllLabel" onchange = librarySensorCheck()>
+									<input id = "searchTabTailoredGeointAllCheckbox" type = "checkbox">ALL
+								</label>
+								<g:each in = "${params.availableResources.tailoredGeoint}">
+									<label class = "btn btn-primary" id = "searchTabTailoredGeoint${it.name.capitalize()}Label">
+										<input id = "searchTabTailoredGeoint${it.name.capitalize()}Checkbox" type = "checkbox">${it.name.toUpperCase()}
+									</label>
+								</g:each>
+							</div>	
+						</td>
+					</tr>
+					<tr>
 						<td align = "right">Min. NIIRS:</td>
                					<td><input id = "searchTabMinNiirsInput" max = "9" min = "0" step = "0.1" type = "number"></td>
 					</tr>

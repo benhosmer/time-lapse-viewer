@@ -49,29 +49,58 @@ function disableAllSensorCheckboxes() {
 	$.each(
 		tlv.availableResources.sensors,
 		function(i, x) {
-			var sensorCheckbox = $("#searchTabSensor" + x.name.capitalize() + "Checkbox");
-			if (sensorCheckbox.is(":checked")) { sensorCheckbox.trigger("click"); } 
+			var checkbox = $("#searchTabSensor" + x.name.capitalize() + "Checkbox");
+			if (checkbox.is(":checked")) { checkbox.trigger("click"); } 
 			
-			var sensorLabel = $("#searchTabSensor" + x.name.capitalize() + "Label");
-			sensorLabel.attr("disabled", true);
-			sensorLabel.fadeTo("fast", 0.5);
+			var label = $("#searchTabSensor" + x.name.capitalize() + "Label");
+			label.attr("disabled", true);
+			label.fadeTo("fast", 0.5);
 		}
 	);
 }
 
 function disableSensorCheckbox(sensorName) {
-	var sensorCheckbox = $("#searchTabSensor" + sensorName.capitalize() + "Checkbox");
-	if (sensorCheckbox.is(":checked")) { sensorCheckbox.trigger("click"); }
+	var checkbox = $("#searchTabSensor" + sensorName.capitalize() + "Checkbox");
+	if (checkbox.is(":checked")) { checkbox.trigger("click"); }
 
-	var sensorLabel = $("#searchTabSensor" + sensorName.capitalize() + "Label");
-	sensorLabel.attr("disabled", true);
-	sensorLabel.fadeTo("fast", 0.5);
+	var label = $("#searchTabSensor" + sensorName.capitalize() + "Label");
+	label.attr("disabled", true);
+	label.fadeTo("fast", 0.5);
+}
+
+function disableAllTailoredGeointCheckboxes() {
+	$.each(
+		tlv.availableResources.tailoredGeoint,
+		function(i, x) {
+			var checkbox = $("#searchTabTailoredGeoint" + x.name.capitalize() + "Checkbox");
+			if (checkbox.is(":checked")) { checkbox.trigger("click"); }
+
+			var label = $("#searchTabTailoredGeoint" + x.name.capitalize() + "Label");
+			label.attr("disabled", true);
+			label.fadeTo("fast", 0.5);
+		}
+	);
+}
+
+function disableTailoredGeointCheckbox(tailoredGeointName) {
+	var checkbox = $("#searchTabTailoredGeoint" + tailoredGeointName.capitalize() + "Checkbox");
+	if (checkbox.is(":checked")) { checkbox.trigger("click"); }
+
+	var label = $("#searchTabTailoredGeoint" + tailoredGeointName.capitalize() + "Label");
+	label.attr("disabled", true);
+	label.fadeTo("fast", 0.5);
 }
 
 function enableSensorCheckbox(sensorName) {
-	var sensorLabel = $("#searchTabSensor" + sensorName.capitalize() + "Label");
-	sensorLabel.attr("disabled", false);
-	sensorLabel.fadeTo("fast", 1);
+	var label = $("#searchTabSensor" + sensorName.capitalize() + "Label");
+	label.attr("disabled", false);
+	label.fadeTo("fast", 1);
+}
+
+function enableTailoredGeointCheckbox(tailoredGeointName) {
+        var label = $("#searchTabTailoredGeoint" + tailoredGeointName.capitalize() + "Label");
+        label.attr("disabled", false);
+        label.fadeTo("fast", 1);
 }
 
 function getDate(date) {
@@ -145,6 +174,9 @@ function getSearchParams() {
 	searchObject.startMinute = startDate.minute;
 	searchObject.startSecond = startDate.second;
 
+	var tailoredGeoint = getSelectedTailoredGeoint();
+	searchObject.tailoredGeoint = tailoredGeoint;
+
 	
 	return searchObject;
 }
@@ -154,8 +186,8 @@ function getSelectedLibraries() {
 	$.each(
 		tlv.availableResources.libraries,
 		function(i, x) {
-			var libraryCheckbox = $("#searchTabLibrary" + x.capitalize() + "Checkbox");
-			if (libraryCheckbox.is(":checked")) { libraries.push(x); }
+			var checkbox = $("#searchTabLibrary" + x.capitalize() + "Checkbox");
+			if (checkbox.is(":checked")) { libraries.push(x); }
 		}
 	);
 
@@ -170,8 +202,8 @@ function getSelectedSensors() {
 		$.each(
 			tlv.availableResources.sensors,
 			function(i, x) {
-				var sensorCheckbox = $("#searchTabSensor" + x.name.capitalize() + "Checkbox");
-				if (sensorCheckbox.is(":checked")) { sensors.push(x.name); }
+				var checkbox = $("#searchTabSensor" + x.name.capitalize() + "Checkbox");
+				if (checkbox.is(":checked")) { sensors.push(x.name); }
 			}
 		);
 	}
@@ -179,6 +211,24 @@ function getSelectedSensors() {
 
 	return sensors;
 }
+
+function getSelectedTailoredGeoint() {
+	var tailoredGeoint = [];
+	if ($("#searchTabTailoredGeointAllCheckbox").is(":checked")) { tailoredGeoint.push("all"); }
+	else { 
+		$.each(
+			tlv.availableResources.tailoredGeoint,
+			function(i, x) {
+				var checkbox = $("#searchTabTailoredGeoint" + x.name.capitalize() + "Checkbox");
+				if (checkbox.is(":checked")) { tailoredGeoint.push(x.name); }
+			}
+		);
+	}
+
+
+	return tailoredGeoint;
+}
+
 
 function getStartDate() {
 	var date = $("#searchTabStartDateTimePicker").data("DateTimePicker").date().toDate();
@@ -207,8 +257,8 @@ function initializeLibraryCheckboxes() {
 		$.each(
 			tlv.libraries.split(","),
 			function(i, x) {
-				var libraryCheckbox = $("#searchTabLibrary" + x.capitalize() + "Checkbox");
-				libraryCheckbox.trigger("click");
+				var checkbox = $("#searchTabLibrary" + x.capitalize() + "Checkbox");
+				checkbox.trigger("click");
 			}
 		);
 	}
@@ -241,8 +291,8 @@ function initializeSensorCheckboxes() {
 		$.each(
 			tlv.sensors.split(","),
 			function(i, x) {
-				var sensorCheckbox = $("#searchTabSensor" + x.capitalize() + "Checkbox");
-                                sensorCheckbox.trigger("click");
+				var checkbox = $("#searchTabSensor" + x.capitalize() + "Checkbox");
+                                checkbox.trigger("click");
 			}
 		);
 	}
@@ -266,6 +316,19 @@ function initializeStartDateTimePicker() {
 	startDate.setMinutes(tlv.startMinute ? tlv.startMinute : 0);
 	startDate.setSeconds(tlv.startSecond ? tlv.startSecond : 0);
 	startDateTimePicker.data("DateTimePicker").date(startDate);
+}
+
+function initializeTailoredGeointCheckboxes() {
+	// default should be such that no tailored geoint checkbox is selected
+	if (tlv.tailoredGeoint) {
+		$.each(
+			tlv.tailoredGeoint.split(","),
+			function(i, x) {
+				var checkbox = $("#searchTabTailoredGeoint" + x.capitalize() + "Checkbox");
+				checkbox.trigger("click");
+			}
+		);
+	}
 }
 
 function librarySensorCheck() {
@@ -295,6 +358,33 @@ function librarySensorCheck() {
 			}
 		);
 	}
+
+	if ($("#searchTabTailoredGeointAllCheckbox").is(":checked")) { disableAllTailoredGeointCheckboxes(); }
+	else {
+		$.each(
+			tlv.availableResources.tailoredGeoint,
+			function(i, x) {
+				var tailoredGeointName = x.name;
+				var thisTailoredGeointShouldBeEnabled = false;
+				$.each(
+					tlv.availableResources.complete,
+					function(j, y) {
+						var libraryCheckbox = $("#searchTabLibrary" + j.capitalize() + "Checkbox");
+						if (libraryCheckbox.is(":checked")) {
+							$.each(
+								y.tailoredGeoint,
+								function(k, z) {
+									if (z.name == tailoredGeointName) { thisTailoredGeointShouldBeEnabled = true; }
+								}
+							);
+						}
+					}
+				);
+				if (thisTailoredGeointShouldBeEnabled) { enableTailoredGeointCheckbox(tailoredGeointName); }
+				else { disableTailoredGeointCheckbox(tailoredGeointName); }
+			}
+		);
+	}
 }
 
 var pageLoadSearch = pageLoad;
@@ -310,6 +400,7 @@ function setupSearchMenuDialog() {
 	initializeStartDateTimePicker();
 
 	initializeSensorCheckboxes();
+	initializeTailoredGeointCheckboxes();
 	initializeMinNiirsInput();
 	initializeMaxCloudCoverInput();
 	initializeMaxResultsSelect();

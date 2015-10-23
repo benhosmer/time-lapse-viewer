@@ -123,6 +123,10 @@ grails.resources.work.dir = ".resources"
 // sample library entry
 libraries {
 	omar {
+		baseUrl = "http://omar.ossim.org"
+		label = "OMAR"
+		relativeApplicationViewUrl = "/omar/mapView/index"
+		relativeWmsUrl = "/omar/ogc/wms"
 		sensors = [
 			[
 				description: "Commercial: Multispectral",
@@ -133,15 +137,25 @@ libraries {
 				name: "vis"
 			]
 		]
-		baseUrl = "http://omar.ossim.org"
-		label = "OMAR"
-		relativeApplicationViewUrl = "/omar/mapView/index"
-		relativeWmsUrl = "/omar/ogc/wms"
+		tailoredGeoint = [
+			[
+				description: "Two-color multiview",
+				name: "2cmv"
+			],
+			[
+				description: "Pan-Sharpened Multispectral",
+				name: "psm"
+			]
+		]
 	}
 }
 */
 libraries {
 	omar {
+		baseUrl = "http://omar.ossim.org"
+		label = "OMAR"
+		relativeApplicationViewUrl = "/omar/mapView/index"
+		relativeWmsUrl = "/omar/ogc/wms"
 		sensors = [
 			[
 				description: "Commercial: Multispectral",
@@ -152,10 +166,16 @@ libraries {
 				name: "vis"
 			]
 		]
-		baseUrl = "http://omar.ossim.org"
-		label = "OMAR"
-		relativeApplicationViewUrl = "/omar/mapView/index"
-		relativeWmsUrl = "/omar/ogc/wms"
+		tailoredGeoint = [
+			[
+				description: "Two-color multiview",
+				name: "2cmv"
+			],
+			[
+				description: "Pan-Sharpened Multispectral",
+				name: "psm"
+			]
+		]
 	}
 }
 
