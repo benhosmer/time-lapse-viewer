@@ -22,7 +22,7 @@
 				<g:render template = "menus/viewMenu"/>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Help</a></li>
+				<li><a href = javascript:void(0) onclick = $("#helpDialog").modal("show")>Help</a></li>
 			</ul>
 		</div>
 	</div>		
