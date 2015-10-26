@@ -12,6 +12,21 @@ class AnimationExportService {
 	def templateExportDefaultService
 
 
+	def exportAvi(params) {
+		def inputFile = exportGif(params)
+
+		def tempFilesDirectory = grailsApplication.config.tempFilesDirectory
+		def date = new Date().format("yyyyMMddHHmmssSSS")
+                def aviFile = new File("${tempFilesDirectory}${date}.avi")
+		def command = "ffmpeg -r 1 -i ${inputFile.absolutePath} -q:v 1 -r 1 ${aviFile.absolutePath}"
+		def process = command.execute()
+		process.waitFor()
+
+	
+		if (aviFile.exists()) { return aviFile }
+		else { return null }
+	}
+
 	def exportGif(params) {
 		def tempFilesDirectory = grailsApplication.config.tempFilesDirectory
 
@@ -39,6 +54,21 @@ class AnimationExportService {
 		else { return null }		
 	}
 
+	def exportMov(params) {
+		def inputFile = exportGif(params)
+
+		def tempFilesDirectory = grailsApplication.config.tempFilesDirectory
+		def date = new Date().format("yyyyMMddHHmmssSSS")
+		def movFile = new File("${tempFilesDirectory}${date}.mov")
+		def command = "ffmpeg -r 1 -i ${inputFile.absolutePath} -q:v 1 -r 1 ${movFile.absolutePath}"
+		def process = command.execute()
+		process.waitFor()
+
+
+		if (movFile.exists()) { return movFile }
+		else { return null }
+	}
+
 	def exportPdf(params) {
 		def tempFilesDirectory = grailsApplication.config.tempFilesDirectory
 
@@ -63,6 +93,21 @@ class AnimationExportService {
 
 
 		if (pdfFile.exists()) { return pdfFile }
+		else { return null }
+	}
+
+	def exportWmv(params) {
+		def inputFile = exportGif(params)
+
+		def tempFilesDirectory = grailsApplication.config.tempFilesDirectory
+		def date = new Date().format("yyyyMMddHHmmssSSS")
+		def wmvFile = new File("${tempFilesDirectory}${date}.wmv")
+		def command = "ffmpeg -r 1 -i ${inputFile.absolutePath} -q:v 1 -r 1 ${wmvFile.absolutePath}"
+		def process = command.execute()
+		process.waitFor()
+
+
+		if (wmvFile.exists()) { return wmvFile }
 		else { return null }
 	}
 }

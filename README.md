@@ -5,10 +5,11 @@ An on-demand, imagery flipbook...
 This application was built using the following:
 <br>
 <ul>
-	<li>ImageMagick 6.9.1</li>
-	<li>Java 1.7.0_45 (JDK)</li>
-	<li>Groovy 2.3.7</li>
-	<li>Grails 2.5.0</li>
+	<li>FFMPEG v2.1.4</li>
+	<li>ImageMagick v6.9.1</li>
+	<li>Java v1.7.0_45 (JDK)</li>
+	<li>Groovy v2.3.7</li>
+	<li>Grails v2.5.0</li>
 </ul>
 
 <h1>Isolated Networks</h1>

@@ -70,7 +70,7 @@ function exportFrames() {
 		tlv.exportAnimationFrames,
 		function(i, x) {
 			if (!x.imageData) {
-				displayLoadingDialog("We're taking a snapshot of the map... this may take a sec.");
+				displayLoadingDialog("Working on frame " + (i + 1) + " of " + tlv.exportAnimationFrames.length + "... this may take a sec.");
 				changeFrame(i);
 				prepareExportFrameParams();
 				setupProxyMap();

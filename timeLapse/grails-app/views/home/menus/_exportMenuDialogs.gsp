@@ -8,7 +8,7 @@
 						<td align = "right">File Tyoe:</td>
 						<td>
 							<select id = "exportAnimationFileTypeSelect">
-								<g:each in = "${["gif", "pdf"]}">
+								<g:each in = "${["avi", "gif", "mov", "pdf", "wmv"]}">
 									<option value = "${it}">${it.toUpperCase()}</option>
 								</g:each>
 							</select>
