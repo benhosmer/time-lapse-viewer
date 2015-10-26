@@ -6,9 +6,10 @@ function beginSearch() {
 		$.ajax({
 			data: "searchParams=" + JSON.stringify(searchParams),
 			dataType: "json",
-			failure: function() { 
-				hideLoadingDiaog();
-				alert("Uh oh, something went wrong with your search!"); },
+			error: function() { 
+				hideLoadingDialog();
+				searchError();
+			},
 			success: function(data) {
 				hideLoadingDialog();
 				$.each(data, function(i, x) { tlv[i] = x; });
@@ -393,6 +394,8 @@ pageLoad = function() {
 	setupSearchMenuDialog();
 	$("#searchDialog").modal("show");
 }
+
+function searchError() { alert("Uh oh, something went wrong with your search!"); }
 
 function setupSearchMenuDialog() {
 	// start with the end date since the start date's default is based on the end date
