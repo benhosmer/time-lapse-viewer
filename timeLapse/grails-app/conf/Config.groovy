@@ -117,6 +117,7 @@ log4j.main = {
 }
 
 
+grails.assets.excludes = ["ol-debug.js"]
 grails.resources.work.dir = ".resources"
 
 /*
