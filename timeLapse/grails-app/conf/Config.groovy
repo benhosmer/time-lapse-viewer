@@ -120,8 +120,6 @@ log4j.main = {
 grails.assets.excludes = ["ol-debug.js"]
 grails.resources.work.dir = ".resources"
 
-/*
-// sample library entry
 libraries {
 	omar {
 		baseUrl = "http://omar.ossim.org"
@@ -139,43 +137,14 @@ libraries {
 			]
 		]
 		tailoredGeoint = [
-			[
-				description: "Two-color multiview",
-				name: "2cmv"
-			],
-			[
-				description: "Pan-Sharpened Multispectral",
-				name: "psm"
-			]
-		]
-	}
-}
-*/
-libraries {
-	omar {
-		baseUrl = "http://omar.ossim.org"
-		label = "OMAR"
-		relativeApplicationViewUrl = "/omar/mapView/index"
-		relativeWmsUrl = "/omar/ogc/wms"
-		sensors = [
-			[
-				description: "Commercial: Multispectral",
-				name: "msi"
-			],
-			[
-				description: "Commercial: Panchromatic",
-				name: "vis"
-			]
-		]
-		tailoredGeoint = [
-			[
-				description: "Two-color multiview",
-				name: "2cmv"
-			],
-			[
-				description: "Pan-Sharpened Multispectral",
-				name: "psm"
-			]
+//			[
+//				description: "Two-color multiview",
+//				name: "2cmv"
+//			],
+//			[
+//				description: "Pan-Sharpened Multispectral",
+//				name: "psm"
+//			]
 		]
 	}
 }
