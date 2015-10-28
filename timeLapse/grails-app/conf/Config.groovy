@@ -10,16 +10,11 @@
 // if (System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
+
 grails.config.locations = []
 
-if ( new File( "${userHome}/.grails/${appName}-config.groovy" ).exists() )
-{
-  grails.config.locations << "file:${userHome}/.grails/${appName}-config.groovy"
-}
-if ( System.env.TIMELAPSE_CONFIG )
-{
-  grails.config.locations << "file:${System.env.TIMELAPSE_CONFIG}"
-}
+if (new File("${userHome}/.grails/${appName}-config.groovy").exists()) { grails.config.locations << "file:${userHome}/.grails/${appName}-config.groovy" }
+if (System.env.TIMELAPSE_CONFIG) { grails.config.locations << "file:${System.env.TIMELAPSE_CONFIG}" }
 
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
