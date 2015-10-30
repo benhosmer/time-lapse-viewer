@@ -126,6 +126,7 @@ log4j.main = {
 grails.assets.excludes = ["ol-debug.js"]
 grails.resources.work.dir = ".resources"
 
+logos = ["cia", "dia", "jcc", "nga", "nro", "nsa", "odni", "tlv", "usmc"]
 libraries {
 	omar {
 		baseUrl = "http://omar.ossim.org"
