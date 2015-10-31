@@ -17,7 +17,7 @@ class HomeController {
 	def index() { 
 		def model = restApiService.serviceMethod(params)
 
-		render(view: "index.gsp", model: [logos: grailsApplication.config.logos, tlvParams : JsonOutput.toJson(model)])
+		render(view: "index.gsp", model: [tlvParams : JsonOutput.toJson(model)])
 	}
 
 	def openSearch() { render openSearchService.serviceMethod() }

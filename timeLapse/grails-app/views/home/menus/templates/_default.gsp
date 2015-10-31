@@ -8,10 +8,8 @@
 	<tr>
 		<td align = "right">Logo:</td>
 		<td>
-			<%--<% def logos = [] %> --%>
-			<%-- <% new File("grails-app/assets/images/logos").eachFile() { logos << it.name.find(/[^\\.]+/) } %> --%>			
 			<select id = "exportFrameLogoSelect">
-				<g:each in = "${raw(logos)}">
+				<g:each in = "${["cia", "dia", "jcc", "nga", "nro", "nsa", "odni", "tlv", "usmc"]}">
 					<option value = "${it}">${it.toUpperCase()}</option>
 				</g:each>
 			</select>
