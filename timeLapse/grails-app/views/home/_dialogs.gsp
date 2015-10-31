@@ -19,4 +19,12 @@
 <g:render template = "menus/searchMenuDialogs"/>
 <g:render template = "menus/timeLapseMenuFunctionsDialogs"/>
 
-<g:render template = "helpDialog/helpDialog"/>
+<div class = "modal" id = "helpDialog">
+	<div class = "modal-dialog">
+		<div class = "modal-content">
+			<div class = "modal-header"><h4>Help!</h4></div>
+			<div class = "modal-body"><g:render plugin = "networkSpecific" template = "helpDialog"/></div>
+			<div class = "modal-footer"><button type = "button" class = "btn btn-default" data-dismiss = "modal">Close</button></div>
+		</div>
+	</div>
+</div>

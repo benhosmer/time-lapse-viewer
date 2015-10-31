@@ -12,12 +12,11 @@ class HomeController {
 	def restApiService
 	def searchLibraryService
 	def wmsConversionService
-
+	def grailsApplication
 
 	def index() { 
 		def model = restApiService.serviceMethod(params)
 
-	
 		render(view: "index.gsp", model: [tlvParams : JsonOutput.toJson(model)])
 	}
 
