@@ -86,39 +86,21 @@ function changeFrame(param) {
 }
 
 function createMousePOsitionControl() {
-	var mousePositionControl = new ol.control.MousePosition({ projection: "EPSG:4326" });
+	var mousePositionControl = new ol.control.MousePosition({ 
+		coordinateFormat: function(coordinate) {
+			var lat = coordinate[1];
+			var lon = coordinate[0];
+			var coordConvert = new CoordinateConversion();
+			switch(mousePositionControl.coordinateDisplayFormat) {
+				case 0: return coordinate[1].toFixed(6) + ", " + coordinate[0].toFixed(6); break;
+				case 1: return coordConvert.ddToDms(lat, "lat") + " " + coordConvert.ddToDms(lon, "lon"); break;
+				case 2: return coordConvert.ddToMgrs(lat, lon); break;
+			}
+		},
+		projection: "EPSG:4326" 
+	});
 
 	mousePositionControl.coordinateDisplayFormat = 0;
-	mousePositionControl.updateHTML_ = function(pixel) {
-		var html = this.undefinedHTML_;
-		if (pixel && this.mapProjection_) {
-			if (!this.transform_) {
-				var projection = this.getProjection();
-				if (projection) {
-					this.transform_ = ol.proj.getTransformFromProjections(this.mapProjection_, projection);
-				} 
-				else { this.transform_ = ol.proj.identityTransform; }
-			}
-			var map = this.getMap();
-			var coordinate = map.getCoordinateFromPixel(pixel);
-			if (coordinate) {
-				this.transform_(coordinate, coordinate);
-				var lat = coordinate[1];
-				var lon = coordinate[0];
-				var coordConvert = new CoordinateConversion()
-				switch(this.coordinateDisplayFormat) {
-					case 0: html = coordinate[1].toFixed(6) + ", " + coordinate[0].toFixed(6); break;
-					case 1: html = coordConvert.ddToDms(lat, "lat") + " " + coordConvert.ddToDms(lon, "lon"); break;
-					case 2: html = coordConvert.ddToMgrs(lat, lon); break; 
-				}
-			}
-		}
-		if (!this.renderedHTML_ || html != this.renderedHTML_) {
-			this.element.innerHTML = html;
-			this.renderedHTML_ = html;
-		}		
-	}
-
 	$(mousePositionControl.element).click(function() {
 		mousePositionControl.coordinateDisplayFormat++;
 		if (mousePositionControl.coordinateDisplayFormat >= 3) { mousePositionControl.coordinateDisplayFormat = 0; }
