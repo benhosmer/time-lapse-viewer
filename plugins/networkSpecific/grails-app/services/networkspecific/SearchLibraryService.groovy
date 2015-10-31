@@ -110,8 +110,8 @@ class SearchLibraryService {
 
 	
 		if (resultsMap.layers.size() > params.maxResults) { 
-			def howManyToDrop = resultsMap.layers.size() - paams.maxResults
-			resultsMap.layers = resultsMap.reverse().drop(howManyToDrop).reverse() 
+			def howManyToDrop = resultsMap.layers.size() - params.maxResults
+			resultsMap.layers = resultsMap.layers.reverse().drop(howManyToDrop).reverse() 
 		}
 
 
