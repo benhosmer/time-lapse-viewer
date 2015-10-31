@@ -149,7 +149,7 @@ function getSearchParams() {
 
 	var locationString = $("#searchTabLocationDiv").val();
 	var location = convertGeospatialCoordinateFormat(locationString);
-	if (!location) { return fasle; }
+	if (!location) { return false; }
 	else { searchObject.location = location; }
 
 	var maxCloudCover = $("#searchTabMaxCloudCoverInput").val();
