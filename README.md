@@ -6,7 +6,7 @@ An on-demand, imagery flipbook...
 This application was built using the following:
 - FFMPEG v2.1.4
 - ImageMagick v6.9.1
-- Java v1.7.0_45 (JDK)
+- Java `v1.7.0_45 (JDK)`
 - Groovy v2.3.7
 - Grails v2.5.0
 
@@ -20,9 +20,8 @@ From within the `timeLapse` directory of this repository, use `$ ./grailsw prod 
 
 ## Configuration Files
 
-_Time Lapse Views_ reads configurations from a number of locations:
+_Time Lapse Viewer_ reads configurations from a number of locations:
 
-1. ???
-2. ???
-3. ???
+1. `~/.grails/timeLapse-config.groovy`
+2. An environment variable, `TIMELAPSE_CONFIG`
 
